@@ -160,6 +160,13 @@ a.btn.main_bt:hover,button.btn.main_bt:hover,a.btn.main_bt:focus,button.btn.main
 .language-switch a { border:0; background:transparent; color:#333; padding:8px; min-width:44px; min-height:44px; display:inline-flex; align-items:center; justify-content:center; text-decoration:none; }
 .language-switch a.is-active { color:#006899; font-weight:700; border-bottom:2px solid var(--lw-blue); }
 .lw-contact-channels { display:flex; flex-direction:column; gap:8px; margin-block:12px; }
+.lw-contact-direct { margin-block:10px; color:#595959; }
+.lw-contact-direct .lw-contact-link { color:#006899; font-weight:700; }
+.footer_style_2 .lw-contact-direct { color:#c9d6dd; }
+.footer_style_2 .lw-contact-direct .lw-contact-link { color:#fff; }
+.lw-owner { display:inline-block; margin-inline-start:8px; }
+.lw-owner a { color:#fff; text-decoration:underline; }
+.cprt .lw-credit, .cprt .lw-owner { white-space:nowrap; }
 .lw-contact-link { color:#006899; font-weight:600; }
 .lw-contact-address { color:#595959; }
 .lw-legal-links { margin-inline:8px; }

@@ -6,6 +6,7 @@ Bootstrap 4.0.0 (CSS): MIT License, Copyright (c) 2011-2018 The Bootstrap Author
 https://github.com/twbs/bootstrap/blob/v4.0.0/LICENSE
 Cairo font family: SIL Open Font License 1.1 (bundled at fonts/cairo/OFL.txt).
 Linkwave Technology brand assets and service illustrations are proprietary company
-assets used by the website owner. Linkwave Technology retains all rights to them.
+assets used by the website owner, with rights confirmed by the owner (2026-11-08).
+All rights reserved. Site development credit: AiFRAHAT.com.
 All other JavaScript and CSS on this site is original to this website and carries no
 third-party redistribution requirement.

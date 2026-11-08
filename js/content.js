@@ -126,7 +126,8 @@ window.LINKWAVE_CONTENT = {
   "contactPhone": "Phone",
   "contactEmail": "Email",
   "contactAddress": "Address",
-  "contactWhatsapp": "WhatsApp"
+  "contactWhatsapp": "WhatsApp",
+  "callUs": "Call us"
  },
  "ar": {
   "brand": "لينك ويف تكنولوجي",
@@ -255,6 +256,7 @@ window.LINKWAVE_CONTENT = {
   "contactPhone": "الهاتف",
   "contactEmail": "البريد الإلكتروني",
   "contactAddress": "العنوان",
-  "contactWhatsapp": "واتساب"
+  "contactWhatsapp": "واتساب",
+  "callUs": "اتصل بنا"
  }
 };
