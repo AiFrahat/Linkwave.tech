@@ -32,3 +32,32 @@ body .lw-menu-toggle,body .lw-slider-controls button { border-radius:9999px; min
 [dir=rtl] .breadcrumb > li + li::before { content:'\2039'; }
 [dir=rtl] .lw-hero-title, [dir=rtl] .lw-hero-sub { text-align:center; }
 .lw-slide-img { max-width:100%; }
+/* ---- unified rounded buttons + hover feedback ---- */
+body .btn, body a.btn, body .btn.main_bt, body .btn.sqaure_bt, body .btn.white_btn,
+body button, body button.btn, body .lw-menu-toggle, body .lw-hero-arrow,
+body .lw-hero-pause, body .lw-bullet, body .language-switch a,
+#navbar_menu > ul > li > a { border-radius:9999px; }
+body .btn, body button, body .lw-menu-toggle, body .lw-hero-arrow,
+body .lw-hero-pause, body .language-switch a, #navbar_menu > ul > li > a {
+ transition: background-color .2s ease, color .2s ease, transform .2s ease,
+             box-shadow .2s ease, border-color .2s ease;
+}
+@media (hover:hover) {
+ body .btn:hover, body button:hover:not(:disabled), body .lw-menu-toggle:hover,
+ body .language-switch a:hover, #navbar_menu > ul > li > a:hover {
+   transform:translateY(-2px); box-shadow:0 8px 18px rgba(2,120,173,.28);
+ }
+ body .btn.main_bt:hover, body a.btn.main_bt:hover, body button.btn.main_bt:hover,
+ body .btn.sqaure_bt:hover { background:#00547c; color:#fff; }
+ body .btn.white_btn:hover { background:#e8f6fd; color:#00547c; box-shadow:0 8px 18px rgba(255,255,255,.18); }
+ body .lw-menu-toggle:hover { background:#eff8fc; }
+ body #navbar_menu > ul > li > a:hover { background:#eff8fc; }
+ body .lw-hero-arrow:hover, body .lw-hero-pause:hover { background:#fff; }
+ body .lw-bullet:hover span { background:#fff; box-shadow:0 0 0 2px #0278ad; }
+}
+body .btn:active, body button:active:not(:disabled) { transform:translateY(0); box-shadow:none; }
+@media (prefers-reduced-motion: reduce) {
+ body .btn, body button, body .lw-menu-toggle, body .lw-hero-arrow,
+ body .lw-hero-pause, body .language-switch a, #navbar_menu > ul > li > a { transition:none; }
+ body .btn:hover, body button:hover, body .btn:active, body button:active { transform:none; }
+}
