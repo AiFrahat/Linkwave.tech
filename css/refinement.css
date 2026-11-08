@@ -23,3 +23,12 @@ body .lw-menu-toggle,body .lw-slider-controls button { border-radius:9999px; min
 .lw-field label { line-height:1.8; }
 @media(max-width:991px) { .logo { margin-bottom:14px; } .logo .lw-brand-lockup img { width:72px; height:72px; } }
 @media(max-width:575px) { .tp-caption.NotGeneric-Title { line-height:1.55!important; } .lw-brand-name { max-width:170px; } }
+
+
+/* ---- launch-fixes: accessibility, contrast, no-JS navigation ---- */
+#main p.large, p.large { color:#595959; }
+.language-switch a, .language-switch a.is-active { border-radius:9999px; min-height:44px; }
+.language-switch a.is-active { box-shadow:inset 0 0 0 1px #0278ad; border-bottom:0; background:#eff8fc; }
+[dir=rtl] .breadcrumb > li + li::before { content:'\2039'; }
+[dir=rtl] .lw-hero-title, [dir=rtl] .lw-hero-sub { text-align:center; }
+.lw-slide-img { max-width:100%; }

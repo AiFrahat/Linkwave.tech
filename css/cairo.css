@@ -1,35 +1,6 @@
-@font-face {
-  font-family: 'Cairo';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(../fonts/cairo/cairo-0.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Cairo';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(../fonts/cairo/cairo-1.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Cairo';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(../fonts/cairo/cairo-2.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Cairo';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(../fonts/cairo/cairo-3.ttf) format('truetype');
-}
-@font-face {
-  font-family: 'Cairo';
-  font-style: normal;
-  font-weight: 800;
-  font-display: swap;
-  src: url(../fonts/cairo/cairo-4.ttf) format('truetype');
-}
+/* Cairo variable-free delivery build: WOFF2 only (SIL OFL 1.1, see OFL.txt). */
+@font-face{font-family:'Cairo';font-style:normal;font-weight:400;font-display:swap;src:url(../fonts/cairo/cairo-0.woff2) format('woff2');}
+@font-face{font-family:'Cairo';font-style:normal;font-weight:500;font-display:swap;src:url(../fonts/cairo/cairo-1.woff2) format('woff2');}
+@font-face{font-family:'Cairo';font-style:normal;font-weight:600;font-display:swap;src:url(../fonts/cairo/cairo-2.woff2) format('woff2');}
+@font-face{font-family:'Cairo';font-style:normal;font-weight:700;font-display:swap;src:url(../fonts/cairo/cairo-3.woff2) format('woff2');}
+@font-face{font-family:'Cairo';font-style:normal;font-weight:800;font-display:swap;src:url(../fonts/cairo/cairo-4.woff2) format('woff2');}

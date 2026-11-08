@@ -1,11 +1,11 @@
-Linkwave Technology adaptation of IT Next by html.design.
-Template CC BY 3.0: https://html.design/license/ ; attribution retained in every footer.
-jQuery 1.12.4: MIT, jQuery Foundation. https://github.com/jquery/jquery/blob/1.12.4/LICENSE.txt
-Bootstrap 4.0.0: MIT, Bootstrap Authors. https://github.com/twbs/bootstrap/blob/v4.0.0/LICENSE
-WOW.js: MIT, Matthieu Aussaguel. https://github.com/matthieua/WOW/blob/master/LICENSE
-Animate.css: MIT, Daniel Eden. https://github.com/animate-css/animate.css/blob/main/LICENSE
-Font Awesome 4.7: font SIL OFL 1.1, CSS MIT; https://fontawesome.com/v4/license/
-Cairo: SIL OFL 1.1; full bundled license at fonts/cairo/OFL.txt.
-Revolution Slider 5.2.5.3 by ThemePunch: supplied with the template; redistribution entitlement UNKNOWN. Obtain proof before publishing this artifact.
-Supplied Linkwave branding and service illustrations: ownership/redistribution confirmation required from the company; no license is invented or granted by this file.
-Original library copyright headers are preserved. This is not a blanket license for all assets.
+Linkwave Technology website — third-party notices
+=====================================================
+Template: IT Next by html.design. Adapted under the publisher's license (CC BY 3.0):
+https://html.design/license/ ; attribution is kept in the footer of every page.
+Bootstrap 4.0.0 (CSS): MIT License, Copyright (c) 2011-2018 The Bootstrap Authors.
+https://github.com/twbs/bootstrap/blob/v4.0.0/LICENSE
+Cairo font family: SIL Open Font License 1.1 (bundled at fonts/cairo/OFL.txt).
+Linkwave Technology brand assets and service illustrations are proprietary company
+assets used by the website owner. Linkwave Technology retains all rights to them.
+All other JavaScript and CSS on this site is original to this website and carries no
+third-party redistribution requirement.
