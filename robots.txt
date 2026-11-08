@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+# Local review build. Enable indexing only after launch approval and metadata validation.

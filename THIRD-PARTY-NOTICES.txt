@@ -1,0 +1,11 @@
+Linkwave Technology adaptation of IT Next by html.design.
+Template CC BY 3.0: https://html.design/license/ ; attribution retained in every footer.
+jQuery 1.12.4: MIT, jQuery Foundation. https://github.com/jquery/jquery/blob/1.12.4/LICENSE.txt
+Bootstrap 4.0.0: MIT, Bootstrap Authors. https://github.com/twbs/bootstrap/blob/v4.0.0/LICENSE
+WOW.js: MIT, Matthieu Aussaguel. https://github.com/matthieua/WOW/blob/master/LICENSE
+Animate.css: MIT, Daniel Eden. https://github.com/animate-css/animate.css/blob/main/LICENSE
+Font Awesome 4.7: font SIL OFL 1.1, CSS MIT; https://fontawesome.com/v4/license/
+Cairo: SIL OFL 1.1; full bundled license at fonts/cairo/OFL.txt.
+Revolution Slider 5.2.5.3 by ThemePunch: supplied with the template; redistribution entitlement UNKNOWN. Obtain proof before publishing this artifact.
+Supplied Linkwave branding and service illustrations: ownership/redistribution confirmation required from the company; no license is invented or granted by this file.
+Original library copyright headers are preserved. This is not a blanket license for all assets.

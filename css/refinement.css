@@ -1,0 +1,25 @@
+/* Requested release refinement; original source template remains untouched. */
+html body, html body h1, html body h2, html body h3, html body h4, html body h5, html body h6,
+html body p, html body a, html body button, html body input, html body select, html body textarea,
+html body label, html body nav, html body footer, html body .tp-caption, html body .lw-brand-name,
+html[dir=rtl] body, html[dir=rtl] body *:not(.fa):not([class*=revicon]) {
+ font-family:'Cairo',Tahoma,Arial,sans-serif!important;
+}
+body { line-height:1.85; font-weight:400; }
+h1,h2,h3,h4,h5,h6 { font-weight:700; }
+.tp-caption.NotGeneric-Title { font-weight:800; }
+#navbar_menu a,.btn,button { font-weight:600; }
+body .btn,body a.btn,body button.btn,body .language-switch button,
+body .lw-menu-toggle,body .lw-slider-controls button { border-radius:9999px; min-height:44px; }
+.language-switch [aria-pressed=true] { box-shadow:inset 0 0 0 1px #0278ad; border-bottom:0; background:#eff8fc; }
+.lw-brand-lockup { display:inline-flex; align-items:center; gap:12px; max-width:100%; }
+.logo .lw-brand-lockup img { width:80px; height:80px; object-fit:contain; }
+.lw-brand-name { font-size:17px; font-weight:700; line-height:1.5; color:#171717; max-width:135px; }
+.footer_style_2 .lw-brand-lockup img { width:100px; height:100px; object-fit:contain; background:transparent; margin:0; }
+.footer_style_2 .lw-brand-name { color:#fff; font-size:19px; }
+.footer_style_2 .lw-brand-lockup { margin-bottom:24px; }
+.header_bottom { padding-block:16px; }
+.NotGeneric-SubTitle { font-weight:500; }
+.lw-field label { line-height:1.8; }
+@media(max-width:991px) { .logo { margin-bottom:14px; } .logo .lw-brand-lockup img { width:72px; height:72px; } }
+@media(max-width:575px) { .tp-caption.NotGeneric-Title { line-height:1.55!important; } .lw-brand-name { max-width:170px; } }
