@@ -7,7 +7,7 @@
   "services_data.py": "4f1a499ef1d408714259cfae1fbfcfae6766d0f12b83327b0cbbca9e26d61255",
   "hero_data.py": "3d1358083731d8f75d18a0dca2c528ced9b0291ad023ad8650b34650006ed80c",
   "artifacts/linkwave.js": "d309b0e9a3dcb7e3335498444af223f533eb7f0aff8699b4fadab341750a2514",
-  "artifacts/site-config.js": "4054bf58a541ac2f4f6ce55a3c833c23a350a7ac325af897b716d38755ce0f1f"
+  "artifacts/site-config.js": "767c9e96f8c600a3af3515735f9480cc5ab1652bc8dec5e48df18707b9cfbbf1"
  },
  "expected": {
   "english_pages": 19,
@@ -54,7 +54,7 @@
   "it_service.html": "90fd2c79ead94fe10381516c68d271f1b97b898d1bc4b2c914cc1476a88a855f",
   "js/content.js": "fb8f554da7e22fd627cae7e70c543ea3d0caf4fc156e168fa56ea41b2a6b3972",
   "js/linkwave.js": "d309b0e9a3dcb7e3335498444af223f533eb7f0aff8699b4fadab341750a2514",
-  "js/site-config.js": "4054bf58a541ac2f4f6ce55a3c833c23a350a7ac325af897b716d38755ce0f1f",
+  "js/site-config.js": "767c9e96f8c600a3af3515735f9480cc5ab1652bc8dec5e48df18707b9cfbbf1",
   "privacy.html": "4e674bb13dfa4c06e87e3841ae1aa2a7a620d529642e545db9ffa4d88eab157e",
   "robots.txt": "c9fb76830ddd6a85140b19646e83fcb0d5d22e90777ee8c38a3daff0f92424eb",
   "service-business-it.html": "68bcdf8e224490974ed241ab68e059a395b61f315a493ad18d7da04153525073",
@@ -71,5 +71,5 @@
   "sitemap.xml": "b89fa742f5a5a4d05c3514121ec21c995af71fcabaca251d78342b01a00bb5c9",
   "terms.html": "129c965eae93eb96e4b426ad33919e71fc0406ebd39754a56a9bf0989320ac91"
  },
- "generatedAggregateSha256": "06ce6f95d4fef1447f5b8fed02b3132255f78547e081b27676f8afeb4ec04694"
+ "generatedAggregateSha256": "e431ea983eb3e443778192348c0631214d2ffdd35c9287438ffdbd2375b57a6b"
 }
