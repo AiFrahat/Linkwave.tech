@@ -246,8 +246,6 @@ def build_head(page: str, lang: str, prefix: str, robots: str = "index,follow",
         f'<link rel="icon" href="{prefix}favicon-16.png" sizes="16x16" type="image/png">',
         f'<link rel="apple-touch-icon" href="{prefix}apple-touch-icon-180.png">',
         f'<link rel="manifest" href="{prefix}site.webmanifest">',
-        f'<link rel="preload" href="{prefix}fonts/cairo/cairo-0.woff2" as="font" type="font/woff2" crossorigin>',
-        f'<link rel="preload" href="{prefix}fonts/cairo/cairo-3.woff2" as="font" type="font/woff2" crossorigin>',
     ])
     if page == "index.html":
         parts.append(
@@ -255,6 +253,10 @@ def build_head(page: str, lang: str, prefix: str, robots: str = "index,follow",
             f'imagesrcset="{prefix}images/linkwave/hero-480.webp 480w, {prefix}images/linkwave/hero-960.webp 960w, '
             f'{prefix}images/linkwave/hero.webp 1376w" imagesizes="100vw" fetchpriority="high">'
         )
+    parts.extend([
+        f'<link rel="preload" href="{prefix}fonts/cairo/cairo-0.woff2" as="font" type="font/woff2" crossorigin>',
+        f'<link rel="preload" href="{prefix}fonts/cairo/cairo-3.woff2" as="font" type="font/woff2" crossorigin>',
+    ])
     for css in ("cairo", "bootstrap.min", "style", "responsive", "colors1", "linkwave", "refinement"):
         parts.append(f'<link rel="stylesheet" href="{prefix}css/{css}.css">')
     parts.append(NOSCRIPT_STYLE)
@@ -1178,11 +1180,13 @@ TEN_SERVICES_CSS = """
 [dir=rtl] .lw-hero-cta-btn { direction: rtl; }
 .lw-whatsapp-float { position: fixed; right: 18px; bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   z-index: 1200; display: inline-flex; align-items: center; justify-content: center;
-  width: 56px; height: 56px; border-radius: 50%; background: #25D366; color: #fff;
+  width: 56px; height: 56px; border-radius: 50%; background: #128C7E; color: #fff;
   box-shadow: 0 8px 22px rgba(0, 0, 0, .28); text-decoration: none;
   transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease; }
-.lw-whatsapp-float:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0, 0, 0, .32); background: #1ebe5d; }
+.lw-whatsapp-float:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0, 0, 0, .32); background: #0f7a6d; }
 .lw-whatsapp-float:focus-visible { outline: 3px solid #a84a00; outline-offset: 4px; }
+.lw-whatsapp-float, .lw-whatsapp-float:hover, .lw-whatsapp-float:focus,
+.lw-whatsapp-float:focus-visible, .lw-whatsapp-float:active { color: #fff; }
 .lw-whatsapp-float svg { display: block; }
 @media (max-width: 575px) {
   .lw-whatsapp-float { width: 50px; height: 50px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
@@ -1235,6 +1239,58 @@ body .btn:active, body button:active:not(:disabled) { transform:translateY(0); b
 """
 
 
+CSS_MINIFY_FILES = ("cairo.css", "style.css", "responsive.css", "colors1.css", "linkwave.css", "refinement.css")
+
+
+def minify_css(css: str) -> str:
+    """Conservative CSS minifier: strip comments (except /*! licenses) and collapse
+    whitespace outside strings. No token characters are removed, so values such as
+    calc(100% - 10px), data URIs, custom properties and selectors stay intact."""
+    out = []
+    i = 0
+    n = len(css)
+    quote = None
+    while i < n:
+        ch = css[i]
+        if quote:
+            out.append(ch)
+            if ch == "\\" and i + 1 < n:
+                out.append(css[i + 1])
+                i += 2
+                continue
+            if ch == quote:
+                quote = None
+            i += 1
+            continue
+        if ch in "'\"":
+            quote = ch
+            out.append(ch)
+            i += 1
+            continue
+        if ch == "/" and i + 1 < n and css[i + 1] == "*":
+            end = css.find("*/", i + 2)
+            if end == -1:
+                break
+            comment = css[i:end + 2]
+            if comment.startswith("/*!"):
+                out.append(comment)
+            i = end + 2
+            continue
+        if ch.isspace():
+            j = i
+            while j < n and css[j].isspace():
+                j += 1
+            prev = out[-1] if out else ""
+            nxt = css[j] if j < n else ""
+            if prev and prev not in "{};," and nxt not in "{};,":
+                out.append(" ")
+            i = j
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
 def update_css() -> None:
     artifacts = Path(__file__).resolve().parent / "artifacts"
     for name in ("linkwave.js", "site-config.js"):
@@ -1262,6 +1318,11 @@ def update_css() -> None:
         encoding="utf-8",
         newline="\n",
     )
+
+    for css_name in CSS_MINIFY_FILES:
+        css_path = SITE / "css" / css_name
+        css_path.write_text(minify_css(css_path.read_text(encoding="utf-8")),
+                            encoding="utf-8", newline="\n")
 
 
 def main() -> None:

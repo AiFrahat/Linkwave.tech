@@ -1,8 +1,8 @@
 {
  "baselineCommit": "da5ee8b",
- "generatorSha256": "f3be528b52e6880f589de097dfb9f8a35942c43b2ca9edd4826b7b317f0816cb",
+ "generatorSha256": "0ae87f204c82cc6d60495a8327da48178a44420b11bfc5496cd847204dfa688d",
  "toolSha256": {
-  "release_build.py": "f3be528b52e6880f589de097dfb9f8a35942c43b2ca9edd4826b7b317f0816cb",
+  "release_build.py": "0ae87f204c82cc6d60495a8327da48178a44420b11bfc5496cd847204dfa688d",
   "ar_egyptian.py": "8c8709766f7507f954abee665d95200fa5433d6ab6b41e5992cceadcacfbbf12",
   "services_data.py": "4f1a499ef1d408714259cfae1fbfcfae6766d0f12b83327b0cbbca9e26d61255",
   "hero_data.py": "3d1358083731d8f75d18a0dca2c528ced9b0291ad023ad8650b34650006ed80c",
@@ -19,10 +19,10 @@
  },
  "generatedFileCount": 51,
  "generatedFiles": {
-  "404.html": "19a52f1e6710a491c26f3ee76043d34aac52c03958af2d01f284fc62aa8bb97a",
+  "404.html": "30e3c1b6033dc614deafccae1cc88d1e3bce198cea53041c65476a9e4917e2aa",
   "THIRD-PARTY-NOTICES.txt": "250cbf29866b2a8a1b1bebcedcfedb70ee99578704dcea9d0f4986939050e765",
   "ar/business-home.html": "bbc5a0814a69d785634d297a4dd1771683dba94dea4bed7bc052860794329ceb",
-  "ar/index.html": "4853eb5e90e7dc38deb508194cf6f9ac2249f6cb79f8b979d17cffa084113b99",
+  "ar/index.html": "b562be654ab72be0bc5b0657e5ed458a2d168afad298a73a0f21cf3af469b6e4",
   "ar/industries.html": "748f687513ce2a52dd5d131d83cf2871071248a1a24671baa44c0e69ff23041e",
   "ar/it_about.html": "526439adc4967ce629a76ed8bc02061d23957b0b9ae7466f2e3e3514f6a110d2",
   "ar/it_contact.html": "b02b9d21b37e6e9c8884deb64ad54b4ae2cb0d3f4b77ca1ce27fa3d0c8d20145",
@@ -41,13 +41,13 @@
   "ar/terms.html": "b8754b4191620d179e40eb633cd1bc746ac1de974f77215fb343a73fb0b110cd",
   "business-home.html": "77a7ab46f22b88a918d110b2ba1f6c9fea0989d88bc22fd873926c41e58e04c3",
   "css/bootstrap.min.css": "f9f1ce2a9079ebe7445ff10ac12b8f049abc43c499f4978297ec5dd23283a2e5",
-  "css/cairo.css": "931d40c1a96037a409c0cb1caa8faa43fea225cb8b05ad47968410c50e3f7193",
-  "css/colors1.css": "0b7c835770bd9c31ad1708de9d6e5dad59b47c3e0d7bafa56c6d8ec6169ec992",
-  "css/linkwave.css": "c77f96d7c8724286377007a2c33adf9f52ffe3f8db7dc1a10e50fffc93549cd6",
-  "css/refinement.css": "208f664dd065330af4d372dea0343a2c6a260437bbee4b3490738cdb568a5266",
-  "css/responsive.css": "cf880d665de715551e2ec29a4b05415cc12dd131c6ab35bbc3ecee22cf57499b",
-  "css/style.css": "71046b09cdd5cb83e9c80f9fad9103b3290ff93c5a6f953d124d7efc92918969",
-  "index.html": "2da99c58c56a071ea60cdd95b5ec8e4a9e57cab27c4c27be5fc444f8e8136ff9",
+  "css/cairo.css": "445cdeb1cdc1bb70ab64d207073b31dfa553b0889b2a0c18148d468ec7007954",
+  "css/colors1.css": "d45e071eb96dc4291d0de9a2fc766abe3a0ad4a1c3d2a49fee31079b5818a72b",
+  "css/linkwave.css": "95202702fa4269a6c21fd0c862acfe7783a9df227c0ccacfeedace7e9a392ff8",
+  "css/refinement.css": "866d928a0676e30eefc7ab9a947091f15c058b356f1a439e21f379f42d398267",
+  "css/responsive.css": "1d3ceb6ce9d1a60878fa78207ae6de5196c97a7a0864bc1f7798f371fabb06e3",
+  "css/style.css": "06a31d3253b9d6d0190f271f9efa8e78d90071ea1544d4e9412b4c9022e2f454",
+  "index.html": "2e6f90c0e9d91bf1d857c51305efc6ded262b4ee639ea5798e8c42f6aa13917c",
   "industries.html": "c476f30bc6817ebca0dd6b876501cecc76933d6c5e5bdeb10dbdd31bc5242f68",
   "it_about.html": "e3e8278ed837b03234fc995e3ac774a4f869f6d17996fb06d1d103691247e4c4",
   "it_contact.html": "c194a5838b08589a278ffe82e304451cd9faeb27f03898f110306de47182345a",
@@ -71,5 +71,5 @@
   "sitemap.xml": "b89fa742f5a5a4d05c3514121ec21c995af71fcabaca251d78342b01a00bb5c9",
   "terms.html": "0791c05c262a660966b1ccfef761c281764e8e61b267ff1461930b0488bfccda"
  },
- "generatedAggregateSha256": "90adc79f0b86c66ff86f0b095a81d0b9dc56b7731b5e5242699df1d41f7ea621"
+ "generatedAggregateSha256": "3f1bed71ceebb1a528b6cc5090bce3f533200195184c5baae65ba40262e4c74e"
 }
