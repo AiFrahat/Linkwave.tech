@@ -1,13 +1,13 @@
 {
  "baselineCommit": "da5ee8b",
- "generatorSha256": "0ae87f204c82cc6d60495a8327da48178a44420b11bfc5496cd847204dfa688d",
+ "generatorSha256": "6a853fb1baca79157b022271b3acdd116c1a7390b200b6e6c0a203d89290122d",
  "toolSha256": {
-  "release_build.py": "0ae87f204c82cc6d60495a8327da48178a44420b11bfc5496cd847204dfa688d",
+  "release_build.py": "6a853fb1baca79157b022271b3acdd116c1a7390b200b6e6c0a203d89290122d",
   "ar_egyptian.py": "8c8709766f7507f954abee665d95200fa5433d6ab6b41e5992cceadcacfbbf12",
   "services_data.py": "4f1a499ef1d408714259cfae1fbfcfae6766d0f12b83327b0cbbca9e26d61255",
   "hero_data.py": "3d1358083731d8f75d18a0dca2c528ced9b0291ad023ad8650b34650006ed80c",
-  "artifacts/linkwave.js": "de6501b2aa572f5cf4d89f6b307acd0acec3825e8f7f3372dd3492b2648f248d",
-  "artifacts/site-config.js": "745f30983ebed7ae87f285a5d8e53f75d871dc948eed16ad187b7417ca65ba64"
+  "artifacts/linkwave.js": "9dc538de4594325c6960e533c7ac84dc3b53ec70c18b1b72094cf65803cea743",
+  "artifacts/site-config.js": "13f2b444ca7b716201e6dfca6b473bc939217502a7fde8c0a90f31109c28461a"
  },
  "expected": {
   "english_pages": 19,
@@ -25,7 +25,7 @@
   "ar/index.html": "b562be654ab72be0bc5b0657e5ed458a2d168afad298a73a0f21cf3af469b6e4",
   "ar/industries.html": "748f687513ce2a52dd5d131d83cf2871071248a1a24671baa44c0e69ff23041e",
   "ar/it_about.html": "526439adc4967ce629a76ed8bc02061d23957b0b9ae7466f2e3e3514f6a110d2",
-  "ar/it_contact.html": "b02b9d21b37e6e9c8884deb64ad54b4ae2cb0d3f4b77ca1ce27fa3d0c8d20145",
+  "ar/it_contact.html": "e532bf9bcf562d8ee198f4d1dd336fc6e9895c9800a1825285c6db298debac52",
   "ar/it_service.html": "a0031461cb575ffd2577f7c08181adf99d9d98b7b9f3ef80995c26f5f972b845",
   "ar/privacy.html": "60b6d4e2ccdd688c87b70233873e915b5fda961dacce261e8901d31291391c26",
   "ar/service-business-it.html": "aa1111285007b1af4bbdf50db46223fb3749d525b1c746f8707915f74ad16ae9",
@@ -43,18 +43,18 @@
   "css/bootstrap.min.css": "f9f1ce2a9079ebe7445ff10ac12b8f049abc43c499f4978297ec5dd23283a2e5",
   "css/cairo.css": "445cdeb1cdc1bb70ab64d207073b31dfa553b0889b2a0c18148d468ec7007954",
   "css/colors1.css": "d45e071eb96dc4291d0de9a2fc766abe3a0ad4a1c3d2a49fee31079b5818a72b",
-  "css/linkwave.css": "95202702fa4269a6c21fd0c862acfe7783a9df227c0ccacfeedace7e9a392ff8",
+  "css/linkwave.css": "bf45a9a13d98945420aca7d06d176733b334273a62053a165f7ffa334e29fc59",
   "css/refinement.css": "866d928a0676e30eefc7ab9a947091f15c058b356f1a439e21f379f42d398267",
   "css/responsive.css": "1d3ceb6ce9d1a60878fa78207ae6de5196c97a7a0864bc1f7798f371fabb06e3",
   "css/style.css": "06a31d3253b9d6d0190f271f9efa8e78d90071ea1544d4e9412b4c9022e2f454",
   "index.html": "2e6f90c0e9d91bf1d857c51305efc6ded262b4ee639ea5798e8c42f6aa13917c",
   "industries.html": "c476f30bc6817ebca0dd6b876501cecc76933d6c5e5bdeb10dbdd31bc5242f68",
   "it_about.html": "e3e8278ed837b03234fc995e3ac774a4f869f6d17996fb06d1d103691247e4c4",
-  "it_contact.html": "c194a5838b08589a278ffe82e304451cd9faeb27f03898f110306de47182345a",
+  "it_contact.html": "0b1ef3fceb445977eea5acdd8d742438465bc1f7e045b8deda3ed48069fc38f6",
   "it_service.html": "7be67aecacf596d95a8bbbcd9ea0298bfc5f2c7618192cf62d482d9d6052a5ca",
-  "js/content.js": "c0e8e9726c27e1af5cbbddc63d2fd5a58a4d4c0415d8ab20a7b3baeec80df0f6",
-  "js/linkwave.js": "de6501b2aa572f5cf4d89f6b307acd0acec3825e8f7f3372dd3492b2648f248d",
-  "js/site-config.js": "745f30983ebed7ae87f285a5d8e53f75d871dc948eed16ad187b7417ca65ba64",
+  "js/content.js": "fb8f554da7e22fd627cae7e70c543ea3d0caf4fc156e168fa56ea41b2a6b3972",
+  "js/linkwave.js": "9dc538de4594325c6960e533c7ac84dc3b53ec70c18b1b72094cf65803cea743",
+  "js/site-config.js": "13f2b444ca7b716201e6dfca6b473bc939217502a7fde8c0a90f31109c28461a",
   "privacy.html": "145b49d8d7df9804e43e347ab262f6f02657b4eee02bacb59de71a1616ce1c54",
   "robots.txt": "c9fb76830ddd6a85140b19646e83fcb0d5d22e90777ee8c38a3daff0f92424eb",
   "service-business-it.html": "58701071cf1281be776e30b70fec49d8846c5ddf65b09cffe56e557b9f6bac42",
@@ -71,5 +71,5 @@
   "sitemap.xml": "b89fa742f5a5a4d05c3514121ec21c995af71fcabaca251d78342b01a00bb5c9",
   "terms.html": "0791c05c262a660966b1ccfef761c281764e8e61b267ff1461930b0488bfccda"
  },
- "generatedAggregateSha256": "3f1bed71ceebb1a528b6cc5090bce3f533200195184c5baae65ba40262e4c74e"
+ "generatedAggregateSha256": "d72cde3a2bc7543e2b7cecf34a39244b97b4a1abc7be21543c5b07b3b8e26cf2"
 }

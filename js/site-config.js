@@ -1,13 +1,13 @@
-/* Public site configuration.
- * The verified phone number is published statically in the page templates
- * (footer + contact page), so it works even without JavaScript.
- * Fill the remaining verified details when they are approved, then commit this file:
- * the contact sections and the enquiry form pick the values up automatically.
- * Keep secrets (mail credentials, API keys) on the server side, never here. */
+/* Public site configuration (no secrets may ever be placed here).
+ * The contact recipient and public channels are rendered from these values.
+ * Form submissions go to formEndpoint (an https serverless function) — set it only
+ * after the owner has configured and verified the endpoint; the form stays disabled
+ * while it is null. Keep mail credentials/API keys on the server, never in this file. */
 window.LINKWAVE_CONFIG = {
-  phone: null,          // Additional phone if different from the published +20 127 666 8018
-  email: null,          // Example: "info@linkwave.tech"
-  address: null,        // Verified office address
-  whatsapp: null,       // International number without spaces: "201276668018"
-  formEndpoint: null    // HTTPS endpoint that accepts POST JSON; null = local validation only
+  phone: null,                      // Additional phone if different from +20 127 666 8018
+  email: 'info@linkwave.tech',      // Approved public contact mailbox
+  address: null,                    // Verified office address
+  whatsapp: '201276668018',         // International number without spaces
+  formEndpoint: null,               // e.g. '/api/contact' or an https:// serverless URL
+  formCooldownMs: 30000             // Client-side duplicate-submission cooldown
 };

@@ -1,0 +1,11 @@
+{
+  "name": "linkwave-contact-form",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal serverless endpoint for the Linkwave website enquiry form",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "nodemailer": "^6.9.16"
+  }
+}

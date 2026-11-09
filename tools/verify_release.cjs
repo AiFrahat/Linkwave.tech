@@ -299,7 +299,13 @@ function staticChecks() {
   functional.form = {
     invalid: await p.locator('[aria-invalid=true]').count(),
     submitDisabled: await p.locator('#quote-form button[type=submit]').isDisabled(),
+    fields: await p.evaluate(() => ['name', 'email', 'phone', 'subject', 'message'].every((id) => !!document.getElementById(id))),
+    honeypot: await p.locator('#quote-form input[name="_gotcha"]').count(),
+    emailChannel: await p.locator('.lw-contact-channels a[href="mailto:info@linkwave.tech"]').count(),
   };
+  if (!functional.form.fields) failures.push('contact form fields missing');
+  if (functional.form.honeypot !== 1) failures.push('contact honeypot missing');
+  if (functional.form.emailChannel < 1) failures.push('contact email channel missing');
 
   await p.goto(BASE + 'business-home.html', { waitUntil: 'load' });
   await p.waitForTimeout(300);

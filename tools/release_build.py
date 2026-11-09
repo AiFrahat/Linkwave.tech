@@ -163,10 +163,13 @@ HEAD_EXTRA = (
     '<meta name="referrer" content="strict-origin-when-cross-origin">'
 )
 
+FORM_ORIGIN = os.environ.get("LINKWAVE_FORM_ORIGIN", "").strip()
 CSP = (
     "<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; "
     "script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
-    "font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; "
+    "font-src 'self'; connect-src 'self'"
+    + ((" " + FORM_ORIGIN) if FORM_ORIGIN else "")
+    + "; base-uri 'self'; form-action 'self'; "
     "object-src 'none'\">"
 )
 
@@ -476,12 +479,49 @@ def update_dictionary() -> dict:
     for key, (en, ar) in additions.items():
         data["en"].setdefault(key, en)
         data["ar"].setdefault(key, ar)
+    form_copy = {
+        "name": ("Full name", "الاسم بالكامل"),
+        "email": ("Email address", "البريد الإلكتروني"),
+        "phone": ("Phone (optional)", "رقم الهاتف (اختياري)"),
+        "subject": ("Subject", "الموضوع"),
+        "message": ("Message", "رسالتك"),
+        "validate": ("Check details", "راجع البيانات"),
+        "submit": ("Submission unavailable", "الإرسال غير متاح"),
+        "send": ("Send message", "إرسال الرسالة"),
+        "sending": ("Sending…", "جارٍ الإرسال…"),
+        "accepted": ("Your message was accepted for delivery.", "تم قبول رسالتك للإرسال."),
+        "sentErr": ("Sending failed. Please try again or use the phone/WhatsApp.",
+                    "تعذّر الإرسال. حاول تاني أو استخدم الهاتف/واتساب."),
+        "rateLimited": ("Too many attempts. Please wait a minute and try again.",
+                        "محاولات كتير. استنى دقيقة وحاول تاني."),
+        "phoneBad": ("Enter a valid phone number.", "اكتب رقم هاتف صحيح."),
+        "privacy": ("Your details are sent by email to Linkwave and are not stored on this website.",
+                    "بياناتك بتتبعت على إيميل لينك ويف ومش بتتخزن على الموقع ده."),
+        "reqNote": ("Fields marked * are required.", "الحقول المعلَّمة بـ* مطلوبة."),
+        "valid": ("Your details look valid. Submit the form to send them.",
+                  "بياناتك شكلها صحيح. اضغط إرسال عشان تتبعت."),
+        "invalid": ("Please review the highlighted fields. Nothing has been sent.",
+                    "راجع الحقول المعلّمة. مفيش أي حاجة اتبعتت."),
+    }
+    for _key, (_en, _ar) in form_copy.items():
+        data["en"][_key] = _en
+        data["ar"][_key] = _ar
+    data["en"]["unavailable"] = ("Online enquiries are being configured. "
+                                 "Please use the phone or WhatsApp meanwhile.")
+    data["ar"]["unavailable"] = ("الاستفسارات أونلاين قيد التجهيز. "
+                                 "استخدم الهاتف أو واتساب في الوقت الحالي.")
     data["en"]["pause"] = "Pause"
     data["ar"]["pause"] = "إيقاف"
     data["en"]["play"] = "Play"
     data["ar"]["play"] = "تشغيل"
     if AR_EGYPTIAN:
         data["ar"].update(AR_EGYPTIAN)
+    # The new contact-form copy must win over the legacy Egyptian overrides.
+    for _key, (_en, _ar) in form_copy.items():
+        data["ar"][_key] = _ar
+    data["ar"]["unavailable"] = (
+        "الاستفسارات أونلاين قيد التجهيز. استخدم الهاتف أو واتساب في الوقت الحالي."
+    )
     if SHARED_LABELS:
         for _key, (_en, _ar) in SHARED_LABELS.items():
             data["en"][_key] = _en
@@ -811,6 +851,56 @@ for _svc in NEW_SERVICES:
     GENERATED_PAGES[_svc["route"]] = (lambda svc=_svc: new_service_page_html(svc))
 
 
+def build_contact_form() -> str:
+    """Secure enquiry form. Fields: name, email, phone (optional), subject, message.
+    The submit button stays disabled until a formEndpoint is configured in site-config.js."""
+    def field(field_id: str, label_key: str, required: bool, input_html: str) -> str:
+        req = '<span class="lw-req" aria-hidden="true">*</span> ' if required else ""
+        return (
+            '<div class="col-md-6 lw-field">'
+            f'<label for="{field_id}">{req}<span data-i18n="{label_key}"></span></label>'
+            + input_html
+            + f'<span id="{field_id}-error" class="field-error"></span></div>'
+        )
+
+    name = field("name", "name", True,
+        '<input id="name" name="name" type="text" maxlength="100" required dir="auto" '
+        'autocomplete="name" aria-describedby="name-error">')
+    email = field("email", "email", True,
+        '<input id="email" name="email" type="email" maxlength="254" required dir="ltr" '
+        'autocomplete="email" inputmode="email" aria-describedby="email-error">')
+    phone = field("phone", "phone", False,
+        '<input id="phone" name="phone" type="tel" maxlength="30" dir="ltr" '
+        'autocomplete="tel" inputmode="tel" aria-describedby="phone-error">')
+    subject = field("subject", "subject", True,
+        '<input id="subject" name="subject" type="text" maxlength="150" required dir="auto" '
+        'autocomplete="off" aria-describedby="subject-error">')
+    return (
+        '<form id="quote-form" class="form_contant" novalidate aria-describedby="contact-notice">'
+        '<div class="row">'
+        + name + email + phone + subject
+        + '<div class="col-md-12 lw-field"><label for="message">'
+        '<span class="lw-req" aria-hidden="true">*</span> <span data-i18n="message"></span></label>'
+        '<textarea id="message" name="message" dir="auto" rows="6" maxlength="3000" required '
+        'aria-describedby="message-error"></textarea>'
+        '<span id="message-error" class="field-error"></span></div>'
+        '<div class="lw-hp" aria-hidden="true">'
+        '<label for="lw-website">Company website</label>'
+        '<input id="lw-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">'
+        '</div>'
+        '</div>'
+        '<p data-i18n="privacy"></p>'
+        '<div class="lw-form-actions">'
+        '<button class="btn sqaure_bt" type="button" id="validate-form">'
+        '<span data-i18n="validate"></span></button>'
+        '<button type="submit" class="btn main_bt" disabled aria-busy="false">'
+        '<span data-i18n="submit"></span></button>'
+        '</div>'
+        '<p id="form-status" role="status" aria-live="polite"></p>'
+        '</form>'
+    )
+
+
 def transform_english(dictionary: dict) -> None:
     for page in PAGES:
         if page in ("privacy.html", "terms.html"):
@@ -842,12 +932,8 @@ def transform_english(dictionary: dict) -> None:
             )
         if page == "it_contact.html":
             html = html.replace(' onsubmit="return false"', "")
-            for field in ("name", "email", "service", "message"):
-                html = html.replace(
-                    f'<label for="{field}">',
-                    f'<label for="{field}"><span class="lw-req" aria-hidden="true">*</span> ',
-                    1,
-                )
+            html = re.sub(r'<form id="quote-form".*?</form>',
+                          lambda m: build_contact_form(), html, count=1, flags=re.S)
             html = html.replace(
                 '<p data-i18n="contactPending" >Phone, email and address: awaiting verified company details.</p>',
                 '<p data-i18n="reqNote" class="lw-req-note">Fields marked * are required.</p>'
@@ -1188,6 +1274,10 @@ TEN_SERVICES_CSS = """
 .lw-whatsapp-float, .lw-whatsapp-float:hover, .lw-whatsapp-float:focus,
 .lw-whatsapp-float:focus-visible, .lw-whatsapp-float:active { color: #fff; }
 .lw-whatsapp-float svg { display: block; }
+.lw-hp { position: absolute !important; width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important; overflow: hidden !important;
+  clip: rect(0 0 0 0) !important; white-space: nowrap !important; border: 0 !important; }
+#quote-form [aria-busy="true"] { opacity: .7; cursor: progress; }
 @media (max-width: 575px) {
   .lw-whatsapp-float { width: 50px; height: 50px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
 }

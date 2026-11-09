@@ -106,78 +106,207 @@
     });
   }
 
-  /* 4. Enquiry form: local validation; optional endpoint submission when configured. */
+  /* 4. Enquiry form: accessible validation + secure JSON submission to a configured
+   server-side endpoint. No success is shown unless the endpoint explicitly accepts. */
   var form = document.getElementById('quote-form');
   if (form) {
-    var fields = Array.prototype.slice.call(form.querySelectorAll('input, textarea, select'));
-    var validated = false;
-    var status = document.getElementById('form-status');
+    var FIELD_IDS = ['name', 'email', 'phone', 'subject', 'message'];
+    var fields = FIELD_IDS.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    var statusEl = document.getElementById('form-status');
     var submitButton = form.querySelector('button[type="submit"]');
-    if (config.formEndpoint && submitButton) {
-      submitButton.disabled = false;
-      var submitLabel = submitButton.querySelector('[data-i18n], span');
-      if (submitLabel) submitLabel.textContent = t('send', 'Send enquiry');
+    var submitLabel = submitButton ? submitButton.querySelector('[data-i18n], span') : null;
+    var validateButton = document.getElementById('validate-form');
+    var honey = form.querySelector('input[name="_gotcha"]');
+    var endpoint = '';
+    var endpointConfig = typeof config.formEndpoint === 'string' ? config.formEndpoint.trim() : '';
+    if (/^https?:\/\//.test(endpointConfig) || /^\/[^\/]/.test(endpointConfig)) {
+      endpoint = endpointConfig;
     }
+    var cooldownMs = Number(config.formCooldownMs) > 0 ? Number(config.formCooldownMs) : 30000;
+    var validated = false;
+    var submitting = false;
+    var cooldownUntil = 0;
+    var requestTimer = null;
 
-    var fieldError = function (field) {
-      if (field.required && !field.value.trim()) return t('required');
-      if (field.type === 'email' && field.validity.typeMismatch) return t('badEmail');
-      if (field.maxLength > 0 && field.value.length > field.maxLength) return t('tooLong');
+    var setStatus = function (message) {
+      if (statusEl) statusEl.textContent = message || '';
+    };
+
+    var setSubmitEnabled = function (enabled) {
+      if (!submitButton) return;
+      submitButton.disabled = !enabled;
+      submitButton.setAttribute('aria-busy', 'false');
+    };
+
+    var setSubmitLabel = function (key, fallback) {
+      if (submitLabel) submitLabel.textContent = t(key, fallback);
+    };
+
+    var setBusy = function (busy) {
+      submitting = busy;
+      if (submitButton) {
+        submitButton.setAttribute('aria-busy', busy ? 'true' : 'false');
+        submitButton.disabled = busy;
+      }
+      if (busy) setSubmitLabel('sending', 'Sending…');
+      else setSubmitLabel('send', 'Send message');
+    };
+
+    var fieldMessage = function (field) {
+      var value = (field.value || '').trim();
+      if (field.required && !value) return t('required', 'Please complete this field.');
+      if (field.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
+        return t('badEmail', 'Enter a valid email address.');
+      }
+      if (field.type === 'tel' && value && !/^[+()0-9\s-]{7,30}$/.test(value)) {
+        return t('phoneBad', 'Enter a valid phone number.');
+      }
+      if (field.maxLength > 0 && field.value.length > field.maxLength) {
+        return t('tooLong', 'Please shorten this entry.');
+      }
       return '';
     };
 
-    var validate = function (focus) {
+    var showFieldError = function (field, message) {
+      field.setAttribute('aria-invalid', message ? 'true' : 'false');
+      var target = document.getElementById(field.id + '-error');
+      if (target) target.textContent = message;
+    };
+
+    var validate = function (focusFirst) {
       var firstInvalid = null;
       fields.forEach(function (field) {
-        var message = fieldError(field);
-        field.setAttribute('aria-invalid', message ? 'true' : 'false');
-        var target = document.getElementById(field.id + '-error');
-        if (target) target.textContent = message;
+        var message = fieldMessage(field);
+        showFieldError(field, message);
         if (message && !firstInvalid) firstInvalid = field;
       });
-      if (status) {
-        status.textContent = t(firstInvalid ? 'invalid' : 'valid');
+      if (firstInvalid) {
+        setStatus(t('invalid', 'Please review the highlighted fields. Nothing has been sent.'));
+        if (focusFirst) firstInvalid.focus();
+      } else if (!submitting) {
+        setStatus(t('valid', 'Your details look valid. Submit the form to send them.'));
       }
-      if (firstInvalid && focus) firstInvalid.focus();
       return firstInvalid;
     };
 
+    var clearFieldErrors = function () {
+      fields.forEach(function (field) { showFieldError(field, ''); });
+    };
+
+    var finishSuccess = function () {
+      setBusy(false);
+      cooldownUntil = Date.now() + cooldownMs;
+      setStatus(t('accepted', 'Your message was accepted for delivery.'));
+      form.reset();
+      clearFieldErrors();
+      validated = false;
+      if (submitButton) {
+        submitButton.disabled = true;
+        window.setTimeout(function () {
+          if (!submitting && endpoint) submitButton.disabled = false;
+        }, cooldownMs);
+      }
+    };
+
+    var finishError = function (message) {
+      setBusy(false);
+      setStatus(message);
+      if (submitButton) submitButton.disabled = false;
+    };
+
+    var parseErrors = function (data) {
+      if (!data || !Array.isArray(data.errors) || !data.errors.length) return null;
+      var error = data.errors[0];
+      if (!error || typeof error !== 'object') return null;
+      return {
+        field: typeof error.field === 'string' ? error.field : '',
+        code: typeof error.code === 'string' ? error.code : ''
+      };
+    };
+
     var submitRequest = function () {
-      if (!config.formEndpoint) {
-        if (status) status.textContent = t('valid');
+      if (!endpoint) return;
+      if (submitting) return;
+      if (Date.now() < cooldownUntil) {
+        setStatus(t('rateLimited', 'Too many attempts. Please wait a minute and try again.'));
+        return;
+      }
+      if (honey && honey.value.trim()) {
+        /* Honeypot: behave neutrally for bots, never transmit the message. */
+        finishSuccess();
         return;
       }
       var payload = {};
       fields.forEach(function (field) {
-        if (field.name) payload[field.name] = field.value;
+        payload[field.name] = (field.value || '').trim();
       });
       payload.language = lang;
-      if (status) status.textContent = t('sending', 'Sending…');
-      if (submitButton) submitButton.disabled = true;
-      window.fetch(config.formEndpoint, {
+      payload.page = window.location.pathname;
+      setBusy(true);
+      setStatus(t('sending', 'Sending…'));
+      var controller = typeof AbortController === 'function' ? new AbortController() : null;
+      requestTimer = window.setTimeout(function () {
+        if (controller) controller.abort();
+      }, 20000);
+      window.fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify(payload),
+        signal: controller ? controller.signal : undefined
       }).then(function (response) {
-        if (!response.ok) throw new Error('HTTP ' + response.status);
-        if (status) status.textContent = t('sentOk');
-        form.reset();
-        validated = false;
-      }).catch(function () {
-        if (status) status.textContent = t('sentErr');
+        return response.text().then(function (text) {
+          var data = null;
+          try { data = text ? JSON.parse(text) : null; } catch (error) { data = null; }
+          if (response.status === 429) {
+            var rate = { isRate: true };
+            throw rate;
+          }
+          if (!response.ok) {
+            var provider = { fieldError: parseErrors(data) };
+            throw provider;
+          }
+          if (!data || data.ok !== true) throw { isProvider: true };
+          return data;
+        });
       }).then(function () {
-        if (submitButton) submitButton.disabled = false;
+        window.clearTimeout(requestTimer);
+        requestTimer = null;
+        finishSuccess();
+      }).catch(function (error) {
+        window.clearTimeout(requestTimer);
+        requestTimer = null;
+        if (error && error.isRate) {
+          finishError(t('rateLimited', 'Too many attempts. Please wait a minute and try again.'));
+        } else if (error && error.fieldError) {
+          var field = document.getElementById(error.fieldError.field);
+          var codeMap = {
+            required: 'required', badEmail: 'badEmail', badPhone: 'phoneBad', tooLong: 'tooLong'
+          };
+          if (field && codeMap[error.fieldError.code]) {
+            showFieldError(field, t(codeMap[error.fieldError.code], 'Please check this field.'));
+            setStatus(t('invalid', 'Please review the highlighted fields. Nothing has been sent.'));
+            finishError(statusEl ? statusEl.textContent : '');
+          } else {
+            finishError(t('sentErr', 'Sending failed. Please try again or use the phone/WhatsApp.'));
+          }
+        } else {
+          finishError(t('sentErr', 'Sending failed. Please try again or use the phone/WhatsApp.'));
+        }
       });
     };
 
-    form.addEventListener('submit', function (event) {
+    if (endpoint && submitButton) {
+      submitButton.disabled = false;
+      setSubmitLabel('send', 'Send message');
+    }
+    var onSubmit = function (event) {
       event.preventDefault();
       validated = true;
       if (validate(true)) return;
       submitRequest();
-    });
-
-    var validateButton = document.getElementById('validate-form');
+    };
+    form.addEventListener('submit', onSubmit);
     if (validateButton) {
       validateButton.addEventListener('click', function () {
         validated = true;
@@ -185,14 +314,14 @@
       });
     }
     form.addEventListener('input', function () {
-      if (validated) validate(false);
+      if (validated && !submitting) validate(false);
     });
     form.addEventListener('change', function () {
-      if (validated) validate(false);
+      if (validated && !submitting) validate(false);
     });
   }
 
-  /* 5. Six-slide accessible hero: fade + slow zoom, deferred image hydration,
+/* 5. Six-slide accessible hero: fade + slow zoom, deferred image hydration,
    autoplay with pause-on-hover/focus, keyboard controls and reduced-motion support. */
   var hero = document.getElementById('lw-hero');
   if (hero) {
