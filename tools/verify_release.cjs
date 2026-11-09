@@ -122,6 +122,8 @@ function staticChecks() {
       const info = await p.evaluate(({ lang }) => {
         const mismatch = [];
         document.querySelectorAll('[data-i18n]').forEach((el) => {
+          // The contact submit label is a dynamic state (send vs unavailable); validate it in the form tests.
+          if (el.closest && el.closest('#quote-form button[type=submit]')) return;
           const expected = window.LINKWAVE_CONTENT[lang][el.dataset.i18n];
           if (typeof expected === 'string' && el.textContent !== expected) mismatch.push(el.dataset.i18n + ' => ' + el.textContent.slice(0, 40));
         });
@@ -300,7 +302,7 @@ function staticChecks() {
     invalid: await p.locator('[aria-invalid=true]').count(),
     submitDisabled: await p.locator('#quote-form button[type=submit]').isDisabled(),
     fields: await p.evaluate(() => ['name', 'email', 'phone', 'subject', 'message'].every((id) => !!document.getElementById(id))),
-    honeypot: await p.locator('#quote-form input[name="_gotcha"]').count(),
+    honeypot: await p.locator('#quote-form input[name="_honey"]').count(),
     emailChannel: await p.locator('.lw-contact-channels a[href="mailto:info@linkwave.tech"]').count(),
   };
   if (!functional.form.fields) failures.push('contact form fields missing');

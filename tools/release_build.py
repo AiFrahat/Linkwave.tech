@@ -884,9 +884,12 @@ def build_contact_form() -> str:
         '<textarea id="message" name="message" dir="auto" rows="6" maxlength="3000" required '
         'aria-describedby="message-error"></textarea>'
         '<span id="message-error" class="field-error"></span></div>'
+        '<input type="hidden" name="_subject" value="Linkwave website enquiry">'
+        '<input type="hidden" name="_template" value="table">'
+        '<input type="hidden" name="_captcha" value="false">'
         '<div class="lw-hp" aria-hidden="true">'
         '<label for="lw-website">Company website</label>'
-        '<input id="lw-website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">'
+        '<input id="lw-website" name="_honey" type="text" tabindex="-1" autocomplete="off">'
         '</div>'
         '</div>'
         '<p data-i18n="privacy"></p>'
@@ -983,7 +986,7 @@ LEGAL = {
         "en": [
             ("Privacy Policy", ""),
             ("Who we are", "This website is operated by Linkwave Technology (\"we\", \"us\"). This policy explains what happens to information when you visit linkwave.tech."),
-            ("Information we collect", "This website does not use analytics, advertising, cookies or third-party trackers. No personal data is stored in your browser to run the site. When the online enquiry form is enabled, the details you submit (name, e-mail, optional phone, subject and message) are sent by e-mail to our contact mailbox (info@linkwave.tech) through our form-delivery endpoint; they are not stored on this website. When the form is disabled, entries stay in your browser and are not transmitted."),
+            ("Information we collect", "This website does not use analytics, advertising, cookies or third-party trackers. No personal data is stored in your browser to run the site. When the online enquiry form is enabled, the details you submit (name, e-mail, optional phone, subject and message) are sent by e-mail to our contact mailbox (info@linkwave.tech) through our third-party form-delivery provider (FormSubmit, formsubmit.co); they are not stored on this website. When the form is disabled, entries stay in your browser and are not transmitted."),
             ("Contacting us", "The verified phone number published on this site (+20 127 666 8018) and the published e-mail address info@linkwave.tech are the official contact channels for enquiries. Using them is voluntary. We use the details you provide only to respond to your enquiry and to follow up on the requested service."),
             ("Hosting", "The site is served by GitHub Pages and its content delivery network, which process technical request data (such as IP address and user agent) to deliver the pages and protect the service. Refer to the hosting provider's privacy statement for details."),
             ("Sharing and retention", "We do not sell or rent information. Enquiry details, once a delivery channel exists, are kept only for as long as needed to handle the request and any resulting business relationship, unless a longer period is required by law."),
@@ -994,7 +997,7 @@ LEGAL = {
         "ar": [
             ("سياسة الخصوصية", ""),
             ("من نحن", "هذا الموقع تشغّله لينك ويف تكنولوجي («نحن»). توضح هذه السياسة ما يحدث للمعلومات عند زيارتك للموقع linkwave.tech."),
-            ("المعلومات التي نجمعها", "لا يستخدم هذا الموقع تحليلات أو إعلانات أو كوكيز أو أدوات تتبّع تابعة لجهات خارجية. لا تُخزَّن بيانات شخصية في متصفحك لتشغيل الموقع. عند تفعيل نموذج التواصل أونلاين، تُرسَل البيانات التي تدخلها (الاسم والإيميل ورقم الهاتف الاختياري والموضوع والرسالة) عبر بريد إلكتروني إلى بريد التواصل info@linkwave.tech من خلال نقطة إرسال النموذج، ولا تُخزَّن على هذا الموقع. وعند تعطيل النموذج تظل البيانات في متصفحك ولا تُرسل."),
+            ("المعلومات التي نجمعها", "لا يستخدم هذا الموقع تحليلات أو إعلانات أو كوكيز أو أدوات تتبّع تابعة لجهات خارجية. لا تُخزَّن بيانات شخصية في متصفحك لتشغيل الموقع. عند تفعيل نموذج التواصل أونلاين، تُرسَل البيانات التي تدخلها (الاسم والإيميل ورقم الهاتف الاختياري والموضوع والرسالة) عبر بريد إلكتروني إلى بريد التواصل info@linkwave.tech من خلال مزوّد إرسال النماذج الخارجي (FormSubmit – formsubmit.co)، ولا تُخزَّن على هذا الموقع. وعند تعطيل النموذج تظل البيانات في متصفحك ولا تُرسل."),
             ("التواصل معنا", "رقم الهاتف المعتمد المنشور على الموقع (+20 127 666 8018) والبريد المنشور info@linkwave.tech هما قناتا التواصل الرسميتان للاستفسارات. والتواصل معنا عبرهما اختياري. نستخدم البيانات التي ترسلها فقط للرد على استفسارك ومتابعة الخدمة المطلوبة."),
             ("الاستضافة", "يُقدَّم الموقع عبر GitHub Pages وشبكة توصيل المحتوى التابعة لها، والتي تعالج بيانات الطلب التقنية (مثل عنوان IP ومعرّف المتصفح) لتسليم الصفحات وحماية الخدمة. راجع بيان الخصوصية الخاص بمزوّد الاستضافة للتفاصيل."),
             ("المشاركة والاحتفاظ", "لا نبيع المعلومات أو نؤجّرها. تُحفظ تفاصيل الاستفسار، عند وجود قناة استقبال، للمدة اللازمة للتعامل مع الطلب وأي علاقة عمل ناتجة عنه، إلا إذا طلب القانون مدة أطول."),

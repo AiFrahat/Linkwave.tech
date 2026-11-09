@@ -116,7 +116,7 @@
     var submitButton = form.querySelector('button[type="submit"]');
     var submitLabel = submitButton ? submitButton.querySelector('[data-i18n], span') : null;
     var validateButton = document.getElementById('validate-form');
-    var honey = form.querySelector('input[name="_gotcha"]');
+    var honey = form.querySelector('input[name="_honey"]');
     var endpoint = '';
     var endpointConfig = typeof config.formEndpoint === 'string' ? config.formEndpoint.trim() : '';
     if (/^https?:\/\//.test(endpointConfig) || /^\/[^\/]/.test(endpointConfig)) {
@@ -237,7 +237,9 @@
         return;
       }
       var payload = {};
-      fields.forEach(function (field) {
+      Array.prototype.forEach.call(form.elements, function (field) {
+        if (!field.name) return;
+        if (field.name === '_honey') { payload._honey = ''; return; }
         payload[field.name] = (field.value || '').trim();
       });
       payload.language = lang;
@@ -266,7 +268,12 @@
             var provider = { fieldError: parseErrors(data) };
             throw provider;
           }
-          if (!data || data.ok !== true) throw { isProvider: true };
+          var accepted = data && (
+            data.ok === true ||
+            data.success === true || data.success === 'true' ||
+            (typeof data.message === 'string' && /success/i.test(data.message))
+          );
+          if (!accepted) throw { isProvider: true };
           return data;
         });
       }).then(function () {
