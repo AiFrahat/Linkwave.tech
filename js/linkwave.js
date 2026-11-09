@@ -192,7 +192,8 @@
     });
   }
 
-  /* 5. Accessible hero slider (fade + slow zoom, pauses on demand, respects reduced motion). */
+  /* 5. Six-slide accessible hero: fade + slow zoom, deferred image hydration,
+   autoplay with pause-on-hover/focus, keyboard controls and reduced-motion support. */
   var hero = document.getElementById('lw-hero');
   if (hero) {
     var slides = Array.prototype.slice.call(hero.querySelectorAll('.lw-slide'));
@@ -204,16 +205,31 @@
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     var index = 0;
     var timer = null;
-    var paused = false;
+    var userPaused = false;
+    var hoverPaused = false;
+
+    var hydrate = function (position) {
+      var slide = slides[position];
+      if (!slide) return;
+      var image = slide.querySelector('.lw-slide-img');
+      if (!image || image.getAttribute('data-hydrated') === '1') return;
+      if (image.getAttribute('data-src')) image.src = image.getAttribute('data-src');
+      if (image.getAttribute('data-srcset')) image.srcset = image.getAttribute('data-srcset');
+      image.setAttribute('data-hydrated', '1');
+    };
+
+    var shouldRun = function () {
+      return !userPaused && !hoverPaused && !reduceMotion.matches;
+    };
 
     var announce = function () {
-      if (!statusNode) return;
-      var title = slides[index].getAttribute('data-slide-title') || '';
-      statusNode.textContent = (index + 1) + ' / ' + slides.length + (title ? ' — ' + title : '');
+      if (statusNode) statusNode.textContent = (index + 1) + ' / ' + slides.length;
     };
 
     var show = function (next, shouldAnnounce) {
       index = (next + slides.length) % slides.length;
+      hydrate(index);
+      hydrate((index + 1) % slides.length);
       slides.forEach(function (slide, position) {
         var active = position === index;
         slide.classList.toggle('is-active', active);
@@ -234,24 +250,28 @@
 
     var start = function () {
       stop();
-      if (paused || reduceMotion.matches) return;
+      if (!shouldRun()) return;
       timer = window.setInterval(function () { show(index + 1, true); }, 7000);
     };
 
-    var setPaused = function (value) {
-      paused = value;
-      hero.classList.toggle('is-paused', paused);
-      if (pauseButton) {
-        pauseButton.setAttribute('aria-pressed', String(paused));
-        var label = pauseButton.querySelector('[data-label]');
-        if (label) label.textContent = t(paused ? 'play' : 'pause');
-      }
-      if (paused) stop(); else start();
+    var updatePauseLabel = function () {
+      if (!pauseButton) return;
+      var effectivePaused = userPaused || reduceMotion.matches;
+      pauseButton.setAttribute('aria-pressed', String(effectivePaused));
+      var label = pauseButton.querySelector('[data-label]');
+      if (label) label.textContent = t(effectivePaused ? 'play' : 'pause');
+    };
+
+    var setUserPaused = function (value) {
+      userPaused = value;
+      hero.classList.toggle('is-paused', userPaused || reduceMotion.matches);
+      updatePauseLabel();
+      if (shouldRun()) start(); else stop();
     };
 
     if (prevButton) prevButton.addEventListener('click', function () { show(index - 1, true); start(); });
     if (nextButton) nextButton.addEventListener('click', function () { show(index + 1, true); start(); });
-    if (pauseButton) pauseButton.addEventListener('click', function () { setPaused(!paused); });
+    if (pauseButton) pauseButton.addEventListener('click', function () { setUserPaused(!userPaused); });
     bullets.forEach(function (bullet, position) {
       bullet.addEventListener('click', function () { show(position, true); start(); });
     });
@@ -259,13 +279,38 @@
       if (event.key === 'ArrowLeft') { show(index - 1, true); start(); }
       if (event.key === 'ArrowRight') { show(index + 1, true); start(); }
     });
+
+    hero.addEventListener('mouseenter', function () { hoverPaused = true; stop(); });
+    hero.addEventListener('mouseleave', function () { hoverPaused = false; if (shouldRun()) start(); });
+    hero.addEventListener('focusin', function () { hoverPaused = true; stop(); });
+    hero.addEventListener('focusout', function (event) {
+      if (!hero.contains(event.relatedTarget)) {
+        hoverPaused = false;
+        if (shouldRun()) start();
+      }
+    });
+
     var onMotionChange = function () {
-      setPaused(reduceMotion.matches);
-      if (!reduceMotion.matches && !paused) start();
+      hero.classList.toggle('is-paused', reduceMotion.matches || userPaused);
+      updatePauseLabel();
+      if (reduceMotion.matches) stop();
+      else if (shouldRun()) start();
     };
     if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onMotionChange);
 
     show(0, false);
-    setPaused(reduceMotion.matches);
+    hydrate(1);
+    if (reduceMotion.matches) {
+      userPaused = true;
+      hero.classList.add('is-paused');
+    }
+    updatePauseLabel();
+    start();
+
+    window.addEventListener('load', function () {
+      window.setTimeout(function () {
+        slides.forEach(function (item, position) { hydrate(position); });
+      }, 1500);
+    });
   }
 })();
