@@ -1,8 +1,8 @@
 {
  "baselineCommit": "da5ee8b",
- "generatorSha256": "6a853fb1baca79157b022271b3acdd116c1a7390b200b6e6c0a203d89290122d",
+ "generatorSha256": "b664afbb67c70a30da7ad9d6ef5a2c125aa216e91add53245238f7085c3abe94",
  "toolSha256": {
-  "release_build.py": "6a853fb1baca79157b022271b3acdd116c1a7390b200b6e6c0a203d89290122d",
+  "release_build.py": "b664afbb67c70a30da7ad9d6ef5a2c125aa216e91add53245238f7085c3abe94",
   "ar_egyptian.py": "8c8709766f7507f954abee665d95200fa5433d6ab6b41e5992cceadcacfbbf12",
   "services_data.py": "4f1a499ef1d408714259cfae1fbfcfae6766d0f12b83327b0cbbca9e26d61255",
   "hero_data.py": "3d1358083731d8f75d18a0dca2c528ced9b0291ad023ad8650b34650006ed80c",
@@ -27,7 +27,7 @@
   "ar/it_about.html": "526439adc4967ce629a76ed8bc02061d23957b0b9ae7466f2e3e3514f6a110d2",
   "ar/it_contact.html": "e532bf9bcf562d8ee198f4d1dd336fc6e9895c9800a1825285c6db298debac52",
   "ar/it_service.html": "a0031461cb575ffd2577f7c08181adf99d9d98b7b9f3ef80995c26f5f972b845",
-  "ar/privacy.html": "60b6d4e2ccdd688c87b70233873e915b5fda961dacce261e8901d31291391c26",
+  "ar/privacy.html": "613a74c7fb3aef373440c722f4377096f9b30ef2c6eee719bab19906eaa802ab",
   "ar/service-business-it.html": "aa1111285007b1af4bbdf50db46223fb3749d525b1c746f8707915f74ad16ae9",
   "ar/service-datacenter.html": "3ba69b703e1513948f76a7509069a11a7c9d385bcd220678da0f0d7b2270d53b",
   "ar/service-ftth.html": "92e688ae89893121cf3ea74366406f1d0ec116e121b9c5b6859cb686e0d1fc04",
@@ -38,7 +38,7 @@
   "ar/service-smart-home.html": "053c5f5b0924876765110bef26fdb913751d49a70adddb913ec89f2f2740e5c0",
   "ar/service-telecom.html": "02d0096b3d25b08ebbb644552d64badeb2ed28d1db3da6b3c3a270671369631f",
   "ar/service-voice.html": "4eaf5acd2f3875febdc8a1a92901e5c13de6f3b76a372fce38efc0c97dc6b064",
-  "ar/terms.html": "b8754b4191620d179e40eb633cd1bc746ac1de974f77215fb343a73fb0b110cd",
+  "ar/terms.html": "40c7baf0f8e7771fd22805ec6b4224d92bdbef7d9657b64129b6148136b99ce4",
   "business-home.html": "77a7ab46f22b88a918d110b2ba1f6c9fea0989d88bc22fd873926c41e58e04c3",
   "css/bootstrap.min.css": "f9f1ce2a9079ebe7445ff10ac12b8f049abc43c499f4978297ec5dd23283a2e5",
   "css/cairo.css": "445cdeb1cdc1bb70ab64d207073b31dfa553b0889b2a0c18148d468ec7007954",
@@ -55,7 +55,7 @@
   "js/content.js": "fb8f554da7e22fd627cae7e70c543ea3d0caf4fc156e168fa56ea41b2a6b3972",
   "js/linkwave.js": "9dc538de4594325c6960e533c7ac84dc3b53ec70c18b1b72094cf65803cea743",
   "js/site-config.js": "13f2b444ca7b716201e6dfca6b473bc939217502a7fde8c0a90f31109c28461a",
-  "privacy.html": "145b49d8d7df9804e43e347ab262f6f02657b4eee02bacb59de71a1616ce1c54",
+  "privacy.html": "557033ee14d039f070b3ac763c522df2aba61acb871fb7f068905fba122bca48",
   "robots.txt": "c9fb76830ddd6a85140b19646e83fcb0d5d22e90777ee8c38a3daff0f92424eb",
   "service-business-it.html": "58701071cf1281be776e30b70fec49d8846c5ddf65b09cffe56e557b9f6bac42",
   "service-datacenter.html": "ee7a6d18d55e8a0508bbe9a196bbf0f2aa3736d3b098a4e10121d6db21e4067c",
@@ -69,7 +69,7 @@
   "service-voice.html": "34328560107dd91a13a0d280fc0eb77f71d49c9cedf6fc403699b1c8ac9fb012",
   "site.webmanifest": "bc6c89e3e6fa8d06a0ca0fd88c49aeb131c7f0ce8f722474bf3e06f862a390b0",
   "sitemap.xml": "b89fa742f5a5a4d05c3514121ec21c995af71fcabaca251d78342b01a00bb5c9",
-  "terms.html": "0791c05c262a660966b1ccfef761c281764e8e61b267ff1461930b0488bfccda"
+  "terms.html": "9170966f8875a52ea12b02e7ee755c063a55e1438d1f62ffbf2c3db3a2778d99"
  },
- "generatedAggregateSha256": "d72cde3a2bc7543e2b7cecf34a39244b97b4a1abc7be21543c5b07b3b8e26cf2"
+ "generatedAggregateSha256": "d011107af01551005ef87e4dd25927da2e081278d457d9b05cf4793aad8a01f9"
 }
