@@ -506,10 +506,10 @@ def update_dictionary() -> dict:
     for _key, (_en, _ar) in form_copy.items():
         data["en"][_key] = _en
         data["ar"][_key] = _ar
-    data["en"]["unavailable"] = ("Online enquiries are being configured. "
-                                 "Please use the phone or WhatsApp meanwhile.")
-    data["ar"]["unavailable"] = ("الاستفسارات أونلاين قيد التجهيز. "
-                                 "استخدم الهاتف أو واتساب في الوقت الحالي.")
+    data["en"]["unavailable"] = ("Online form submissions are not available yet. "
+                                 "Please contact us by email at info@linkwave.tech or on WhatsApp.")
+    data["ar"]["unavailable"] = ("إرسال النموذج أونلاين غير متاح حاليًا. "
+                                 "تواصل معنا على info@linkwave.tech أو عبر واتساب.")
     data["en"]["pause"] = "Pause"
     data["ar"]["pause"] = "إيقاف"
     data["en"]["play"] = "Play"
@@ -520,7 +520,7 @@ def update_dictionary() -> dict:
     for _key, (_en, _ar) in form_copy.items():
         data["ar"][_key] = _ar
     data["ar"]["unavailable"] = (
-        "الاستفسارات أونلاين قيد التجهيز. استخدم الهاتف أو واتساب في الوقت الحالي."
+        "إرسال النموذج أونلاين غير متاح حاليًا. تواصل معنا على info@linkwave.tech أو عبر واتساب."
     )
     if SHARED_LABELS:
         for _key, (_en, _ar) in SHARED_LABELS.items():
@@ -942,6 +942,11 @@ def transform_english(dictionary: dict) -> None:
                 '<p data-i18n="reqNote" class="lw-req-note">Fields marked * are required.</p>'
                 '<p class="lw-contact-direct"><span data-i18n="callUs">Call us</span>: '
                 '<a class="lw-contact-link" href="tel:+201276668018" dir="ltr">+20 127 666 8018</a></p>'
+                '<p class="lw-contact-direct"><span data-i18n="contactEmail">Email</span>: '
+                '<a class="lw-contact-link" href="mailto:info@linkwave.tech" dir="ltr">info@linkwave.tech</a> · '
+                '<span data-i18n="contactWhatsapp">WhatsApp</span>: '
+                '<a class="lw-contact-link" href="https://wa.me/201276668018" target="_blank" '
+                'rel="noopener noreferrer">WhatsApp</a></p>'
                 '<div class="lw-contact-channels" data-contact-channels></div>',
                 1,
             )

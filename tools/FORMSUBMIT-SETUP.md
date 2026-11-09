@@ -4,9 +4,11 @@ This is the **simplified, backend-free** contact-form delivery for Linkwave Tech
 The website (GitHub Pages) posts the enquiry directly to **FormSubmit** (free, no registration,
 no e-mail password, no DNS/MX changes), which forwards it to **info@linkwave.tech**.
 
-> Current status: **local implementation complete; real delivery UNVERIFIED.** The service
-> must be activated by the owner (one-time confirmation e-mail) and a real message must be
-> confirmed in the mailbox before the form can be considered working in production.
+> **Current production release (2026-11-09): the form is TEMPORARILY DISABLED.** The
+> FormSubmit implementation is preserved but no live submission is possible
+> (`formEndpoint: null`, endpoint kept in `formEndpointPending`, CSP has no form origin).
+> Real delivery remains **UNVERIFIED** until the owner activates the service and confirms a
+> real message in `info@linkwave.tech` (procedure below).
 
 ## What is verified (official FormSubmit documentation, checked 2026-11-09)
 
@@ -58,7 +60,11 @@ required by this repository.
 
 ## Configuration in this repository
 
-- `js/site-config.js` → `formEndpoint: "https://formsubmit.co/ajax/info@linkwave.tech"`.
+- `js/site-config.js` → `formEndpoint: null` for the disabled release; the approved target is
+  preserved in `formEndpointPending` and must be moved to `formEndpoint` to activate.
+- Re-activation build: set `"formOrigin": "https://formsubmit.co"` in `tools/build-config.json`
+  (or pass `LINKWAVE_FORM_ORIGIN=https://formsubmit.co`), set `formEndpoint` to the pending
+  URL, then `python tools/build_release.py --apply --manifest tools/build-manifest.json`.
 - Form includes hidden `_subject`, `_template=table`, `_captcha=false`, and a visually hidden
   `_honey` honeypot.
 - CSP allows exactly `https://formsubmit.co` in `connect-src` (no wildcard, no other external
