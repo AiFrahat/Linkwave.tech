@@ -10,6 +10,9 @@ site is also directly deployable.
   refresh of photographs is performed, not for the normal build)
 - Git with the repository history (the build extracts the frozen baseline commit)
 
+Build-time configuration lives in `tools/build-config.json` (currently the exact CSP
+`connect-src` origin for the FormSubmit delivery service). The wrapper passes it to the
+generator, so a fresh clone reproduces the committed CSP byte-for-byte.
 No file outside this repository is required. The approved optimized images already
 committed under `images/linkwave/` are the versioned assets; the original owner-supplied
 photographs are retained outside the repository for provenance only and are **not** needed

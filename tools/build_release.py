@@ -72,6 +72,12 @@ def run_generator(dest: Path) -> None:
     env = os.environ.copy()
     env["LINKWAVE_SITE"] = str(dest)
     env["PYTHONIOENCODING"] = "utf-8"
+    config_path = TOOLS / "build-config.json"
+    form_origin = ""
+    if config_path.exists():
+        form_origin = str(json.loads(config_path.read_text(encoding="utf-8")).get("formOrigin") or "")
+    env_origin = os.environ.get("LINKWAVE_FORM_ORIGIN", "").strip()
+    env["LINKWAVE_FORM_ORIGIN"] = env_origin or form_origin
     result = subprocess.run(
         [sys.executable, str(GENERATOR)],
         cwd=str(REPO), env=env, capture_output=True, text=True,
