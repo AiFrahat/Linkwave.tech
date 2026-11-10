@@ -424,11 +424,11 @@ def build_footer(lang: str, prefix: str) -> str:
         '<div class="lw-contact-channels" data-contact-channels></div>'
         '<a href="it_contact.html" class="btn white_btn" data-local><span data-i18n="quote">Request a Quote</span></a>'
         "</div></div></div>"
-        '<div class="cprt"><p>© 2026 <span data-i18n="rights">Linkwave Technology. All rights reserved.</span> '
+        '<div class="cprt"><p>© 2018 <span data-i18n="rights">Linkwave Technology. All rights reserved.</span> '
         '<span class="lw-legal-links"><a href="privacy.html" data-i18n="privacyLink">Privacy Policy</a> · '
         '<a href="terms.html" data-i18n="termsLink">Terms of Use</a></span> '
         '<span class="lw-credit"><span data-i18n="credit">Template by</span> '
-        '<a href="https://html.design" rel="nofollow">html.design</a></span> '
+        '<a href="https://aifrahat.com">AiFrahat.com</a></span> '
         '<span class="lw-owner" dir="rtl">حقوق الملكية لـ <a href="https://aifrahat.com" rel="noopener">AiFRAHAT.com</a></span></p></div></footer>'
     )
 

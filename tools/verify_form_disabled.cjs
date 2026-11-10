@@ -71,7 +71,7 @@ function check(name, ok, detail) {
       bullets: document.querySelectorAll('.lw-bullet').length,
       rows: document.querySelectorAll('.lw-service-row').length,
       wa: document.querySelectorAll('.lw-whatsapp-float').length,
-      attribution: /html\.design/.test(document.body.innerHTML),
+      attribution: /AiFrahat\.com/.test(document.body.innerHTML),
       h1: document.querySelectorAll('h1').length,
     }));
     check('home-hero-6', home.slides === 6 && home.bullets === 6, JSON.stringify(home));

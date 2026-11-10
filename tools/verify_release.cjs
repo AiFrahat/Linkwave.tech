@@ -47,7 +47,8 @@ function staticChecks() {
     if (!fs.existsSync(abs)) { failures.push('missing page file: ' + rel); continue; }
     const html = fs.readFileSync(abs, 'utf8');
     const dir = path.dirname(abs);
-    if (!/html\.design/.test(html)) failures.push('html.design attribution missing: ' + rel);
+    if (!/AiFrahat\.com/.test(html)) failures.push('AiFrahat.com attribution missing: ' + rel);
+    if (!/© 2018/.test(html)) failures.push('2018 copyright year missing: ' + rel);
     if (!/business-home\.html/.test(html)) failures.push('business nav link missing: ' + rel);
     if (!html.includes(WA_HREF)) failures.push('WhatsApp link missing: ' + rel);
     if ((html.match(/lw-whatsapp-float/g) || []).length !== 1) failures.push('WhatsApp button count != 1: ' + rel);

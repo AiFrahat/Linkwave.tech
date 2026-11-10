@@ -212,7 +212,7 @@ async function waitStatus(page, text, timeout = 8000) {
       whatsapp: document.querySelectorAll('.lw-whatsapp-float').length,
       phone: !!document.querySelector('a[href^="tel:+201276668018"]'),
       email: !!document.querySelector('a[href="mailto:info@linkwave.tech"]'),
-      attribution: /html\.design/.test(document.body.innerHTML),
+      attribution: /AiFrahat\.com/.test(document.body.innerHTML),
       csp: !!document.querySelector('meta[http-equiv="Content-Security-Policy"]'),
       formActionMissing: !document.getElementById('quote-form').getAttribute('action'),
     }));
