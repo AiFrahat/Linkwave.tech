@@ -286,14 +286,16 @@ def lang_switch(page: str, lang: str, prefix: str) -> str:
 
 
 def build_header(page: str, lang: str, prefix: str) -> str:
+    return build_premium_header(page, lang, prefix)
+
+
+def _legacy_header(page: str, lang: str, prefix: str) -> str:
     active = PAGES[page]["nav"]
 
     def li(key: str, href: str) -> str:
         cls = ' class="active" aria-current="page"' if key == active else ""
         return f'<li><a href="{href}"{cls} data-local><span data-i18n="{key}">{key}</span></a></li>'
 
-    if page == "index.html":
-        return build_premium_header(page, lang, prefix)
     items = "".join(li(key, href) for key, href in NAV)
     return (
         '<header id="default_header" class="header_style_1">'
@@ -347,6 +349,7 @@ def build_premium_header(page: str, lang: str, prefix: str) -> str:
         f'<ul class="lw-services-panel__links">{enterprise}</ul></div>'
         '<div class="lw-services-panel__col lw-services-panel__col--home">'
         '<p class="lw-services-panel__label"><span data-i18n="business"></span></p>'
+        '<p class="lw-services-panel__intro" data-i18n="bhIntro"></p>'
         f'<ul class="lw-services-panel__links">{residential}</ul></div>'
         '</div>'
         '<a class="lw-services-panel__all" href="it_service.html" data-local>'
@@ -757,16 +760,18 @@ def all_services():
     ]
 
 
-def _service_row(service):
+def _service_row(service, priority=False):
     key, num, image, route = service["key"], "%02d" % service["number"], service["image"], service["route"]
     bullets = "".join('<li data-i18n="%s%d"></li>' % (key, i) for i in range(4))
+    img_attrs = ('fetchpriority="high" decoding="async"' if priority
+                 else 'loading="lazy" decoding="async"')
     return (
         '<article class="lw-service-row" id="service-%s" aria-labelledby="service-%s-title">'
         '<div class="lw-service-row__media">'
         '<img class="lw-service-row__img" src="images/linkwave/%s.webp" '
         'srcset="images/linkwave/%s-480.webp 480w, images/linkwave/%s-960.webp 960w, images/linkwave/%s.webp 1000w" '
         'sizes="(max-width: 767px) 100vw, 46vw" width="1000" height="563" alt="" '
-        'data-i18n-alt="%sAlt" loading="lazy" decoding="async"></div>'
+        'data-i18n-alt="%sAlt" ' + img_attrs + '></div>'
         '<div class="lw-service-row__body">'
         '<span class="lw-service-row__index" aria-hidden="true">%s</span>'
         '<h3 id="service-%s-title" data-i18n="%s"></h3>'
@@ -777,12 +782,13 @@ def _service_row(service):
     ) % (key, key, image, image, image, image, key, num, key, key, key, bullets, route)
 
 
-def _rows(services):
-    return "".join(_service_row(s) for s in services)
+def _rows(services, priority_first=False):
+    return "".join(_service_row(s, priority=(priority_first and i == 0))
+                   for i, s in enumerate(services))
 
 
-def _business_section():
-    rows = _rows([s for s in all_services() if s["number"] > 6])
+def _business_section(priority_first=False):
+    rows = _rows([s for s in all_services() if s["number"] > 6], priority_first=priority_first)
     return (
         '<section class="section padding_layout_1 lw-services-business" id="business-solutions">'
         '<div class="container">'
@@ -798,8 +804,8 @@ def _business_section():
     )
 
 
-def services_section_html():
-    six = _rows([s for s in all_services() if s["number"] <= 6])
+def services_section_html(priority_first=False):
+    six = _rows([s for s in all_services() if s["number"] <= 6], priority_first=priority_first)
     return (
         '<section class="section padding_layout_1 lw-services-section" id="services">'
         '<div class="container">'
@@ -812,7 +818,7 @@ def services_section_html():
     )
 
 
-def replace_services_section(html):
+def replace_services_section(html, priority_first=False):
     marker = 'data-i18n="servicesHeading"'
     idx = html.find(marker)
     if idx == -1:
@@ -821,7 +827,7 @@ def replace_services_section(html):
     end = html.find("</section>", idx)
     if start == -1 or end == -1:
         raise SystemExit("services section bounds not found")
-    return html[:start] + services_section_html() + html[end + len("</section>"):]
+    return html[:start] + services_section_html(priority_first=priority_first) + html[end + len("</section>"):]
 
 
 def banner_html(title_key, with_business_crumb=True):
@@ -858,7 +864,7 @@ def _page_shell(page, banner, body):
     return (
         '<!DOCTYPE html><html lang="en" dir="ltr" data-static-lang="en">'
         + build_head(page, "en", "")
-        + '<body id="default_theme" data-page="%s">' % PAGES[page]["nav"]
+        + '<body id="default_theme" class="lw-premium-site" data-page="%s">' % PAGES[page]["nav"]
         + '<a class="skip-link" href="#main"><span data-i18n="skip"></span></a>'
         + build_header(page, "en", "")
         + '<main id="main" tabindex="-1">' + banner + body + '</main>'
@@ -870,7 +876,7 @@ def _page_shell(page, banner, body):
 
 def business_page_html():
     banner = banner_html("bhTitle", with_business_crumb=False)
-    rows = _rows([s for s in all_services() if s["number"] > 6])
+    rows = _rows([s for s in all_services() if s["number"] > 6], priority_first=True)
     body = (
         '<section class="section padding_layout_1 lw-services-section"><div class="container">'
         '<p class="large text_align_center" data-i18n="bhIntro"></p>'
@@ -1017,9 +1023,17 @@ def transform_english(dictionary: dict) -> None:
                       lambda m: build_footer("en", ""), html, count=1, flags=re.S)
         html = re.sub(r'<script src="js/jquery[\s\S]*?(?=</body>)',
                       lambda m: build_scripts(""), html, count=1)
+        _body_match = re.search(r'<body([^>]*)>', html)
+        if _body_match:
+            _attrs = _body_match.group(1)
+            if 'class="' in _attrs:
+                _attrs = re.sub(r'class="([^"]*)"',
+                                lambda m: 'class="%s lw-premium-site"' % m.group(1).strip(),
+                                _attrs, count=1)
+            else:
+                _attrs += ' class="lw-premium-site"'
+            html = html[:_body_match.start()] + '<body' + _attrs + '>' + html[_body_match.end():]
         if page == "index.html":
-            html = html.replace('<body id="default_theme"',
-                                '<body id="default_theme" class="lw-premium-home"', 1)
             html = replace_block(
                 html,
                 '<div class="lw-reduced-hero">',
@@ -1037,10 +1051,8 @@ def transform_english(dictionary: dict) -> None:
                 '<a class="lw-contact-link" href="tel:+201276668018" dir="ltr">+20 127 666 8018</a></p>'
                 '<p class="lw-contact-direct"><span data-i18n="contactEmail">Email</span>: '
                 '<a class="lw-contact-link" href="mailto:info@linkwave.tech" dir="ltr">info@linkwave.tech</a> · '
-                '<span data-i18n="contactWhatsapp">WhatsApp</span>: '
                 '<a class="lw-contact-link" href="https://wa.me/201276668018" target="_blank" '
-                'rel="noopener noreferrer">WhatsApp</a></p>'
-                '<div class="lw-contact-channels" data-contact-channels></div>',
+                'rel="noopener noreferrer">WhatsApp</a></p>',
                 1,
             )
             html = html.replace(
@@ -1048,8 +1060,10 @@ def transform_english(dictionary: dict) -> None:
                 '<a class="btn sqaure_bt lw-whatsapp" href="#" data-whatsapp-pending hidden><span data-i18n="contactWhatsapp">WhatsApp</span></a>',
                 1,
             )
-        if page in ("index.html", "it_service.html"):
-            html = replace_services_section(html)
+        if page == "index.html":
+            html = replace_services_section(html, priority_first=False)
+        if page == "it_service.html":
+            html = replace_services_section(html, priority_first=True)
         html = translate(html, dictionary, "en")
         html = re.sub(r'<p data-i18n="illustration"[^>]*>.*?</p>', "", html)
         html = add_srcsets(html, grid=page in ("index.html", "it_service.html"))
@@ -1145,7 +1159,7 @@ def build_legal_page(page: str, lang: str) -> str:
     html = (
         f'<!DOCTYPE html><html lang="{lang}" dir="{"rtl" if lang == "ar" else "ltr"}" data-static-lang="{lang}">'
         + build_head(page, lang, prefix)
-        + f'<body id="default_theme" class="legal_page" data-page="legal">'
+        + f'<body id="default_theme" class="legal_page lw-premium-site" data-page="legal">'
         '<a class="skip-link" href="#main"><span>Skip to content / تخطَّ إلى المحتوى</span></a>'
         + build_header(page, lang, prefix)
         + '<main id="main" tabindex="-1">'
@@ -1171,8 +1185,10 @@ def build_404() -> str:
                      title_override="Page not found | Linkwave Technology",
                      desc_override="The requested page was not found on linkwave.tech. Return to the home page or contact us.",
                      canonical_override=BASE + "/404.html", hreflang=False)
-        + '<body id="default_theme" class="legal_page" data-page="notfound">'
-        '<main id="main" tabindex="-1">'
+        + '<body id="default_theme" class="legal_page lw-premium-site" data-page="notfound">'
+        + '<a class="skip-link" href="#main"><span>Skip to content / تخطَّ إلى المحتوى</span></a>'
+        + build_header("index.html", "en", "")
+        + '<main id="main" tabindex="-1">'
         '<div id="inner_banner" class="section inner_banner_section"><div class="container">'
         '<div class="title-holder"><div class="title-holder-cell">'
         '<h1 class="page-title">Page not found · الصفحة غير موجودة</h1></div></div></div></div>'
