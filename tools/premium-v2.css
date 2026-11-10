@@ -1907,6 +1907,8 @@ body.lw-premium-site {
 }
 
 .lw-premium-site .service-sidebar {
+  position: sticky;
+  top: 140px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2411,4 +2413,22 @@ body.lw-premium-site {
 .lw-premium-site .lw-services-business .main_heading p,
 .lw-premium-site .lw-services-business .large {
   color: rgba(255, 255, 255, 0.74) !important;
+}
+
+/* Final polish: suppress the large embedded vendor banner in the Voice & UC Hero photo,
+   keeping the phone/headset/room composition readable behind the editorial caption. */
+.lw-premium-site .lw-slide:nth-child(3) .lw-slide-img {
+  object-position: 68% center;
+}
+
+.lw-premium-site .lw-slide:nth-child(3) .lw-shade {
+  background:
+    linear-gradient(90deg, rgba(4, 15, 24, 0.95) 0%, rgba(4, 15, 24, 0.84) 38%, rgba(4, 15, 24, 0.58) 68%, rgba(4, 15, 24, 0.34) 100%),
+    linear-gradient(0deg, rgba(4, 15, 24, 0.9) 0%, rgba(4, 15, 24, 0.18) 40%, rgba(4, 15, 24, 0) 62%);
+}
+
+[dir="rtl"] .lw-premium-site .lw-slide:nth-child(3) .lw-shade {
+  background:
+    linear-gradient(270deg, rgba(4, 15, 24, 0.95) 0%, rgba(4, 15, 24, 0.84) 38%, rgba(4, 15, 24, 0.58) 68%, rgba(4, 15, 24, 0.34) 100%),
+    linear-gradient(0deg, rgba(4, 15, 24, 0.9) 0%, rgba(4, 15, 24, 0.18) 40%, rgba(4, 15, 24, 0) 62%);
 }

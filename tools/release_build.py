@@ -259,6 +259,7 @@ def build_head(page: str, lang: str, prefix: str, robots: str = "index,follow",
     parts.extend([
         f'<link rel="preload" href="{prefix}fonts/cairo/cairo-0.woff2" as="font" type="font/woff2" crossorigin>',
         f'<link rel="preload" href="{prefix}fonts/cairo/cairo-3.woff2" as="font" type="font/woff2" crossorigin>',
+        f'<link rel="preload" href="{prefix}fonts/cairo/cairo-4.woff2" as="font" type="font/woff2" crossorigin>',
     ])
     for css in ("cairo", "bootstrap.min", "style", "responsive", "colors1", "linkwave", "refinement"):
         parts.append(f'<link rel="stylesheet" href="{prefix}css/{css}.css">')
