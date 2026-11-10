@@ -436,6 +436,7 @@ def build_footer(lang: str, prefix: str) -> str:
 def build_scripts(prefix: str, lang: str = "en") -> str:
     return (
         whatsapp_markup(lang)
+        + call_markup(lang)
         + f'<script src="{prefix}js/content.js" defer></script>'
         f'<script src="{prefix}js/site-config.js" defer></script>'
         f'<script src="{prefix}js/linkwave.js" defer></script></body></html>'
@@ -550,6 +551,27 @@ def whatsapp_markup(lang: str = "en") -> str:
         '<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" '
         'aria-hidden="true" focusable="false"><path d="%s"/></svg></a>'
     ) % (WHATSAPP_NUMBER, label, WHATSAPP_SVG_PATH)
+
+
+CALL_NUMBER = "+201229030333"
+CALL_LABELS = {
+    "en": "Call Linkwave at 01229030333",
+    "ar": "اتصل بفريق Linkwave على 01229030333",
+}
+CALL_SVG_PATH = (
+    "M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 "
+    "1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 "
+    "0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"
+)
+
+
+def call_markup(lang: str = "en") -> str:
+    label = CALL_LABELS.get(lang, CALL_LABELS.get("en", "Call Linkwave"))
+    return (
+        '<a class="lw-call-float" href="tel:%s" aria-label="%s">'
+        '<svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" '
+        'aria-hidden="true" focusable="false"><path d="%s"/></svg></a>'
+    ) % (CALL_NUMBER, label, CALL_SVG_PATH)
 
 
 def update_dictionary() -> dict:

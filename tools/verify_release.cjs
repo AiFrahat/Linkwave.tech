@@ -50,6 +50,9 @@ function staticChecks() {
     if (!/AiFrahat\.com/.test(html)) failures.push('AiFrahat.com attribution missing: ' + rel);
     if (!/© 2018/.test(html)) failures.push('2018 copyright year missing: ' + rel);
     if (!/business-home\.html/.test(html)) failures.push('business nav link missing: ' + rel);
+    if ((html.match(/lw-call-float/g) || []).length !== 1) failures.push('call button count != 1: ' + rel);
+    if (!html.includes('href="tel:+201229030333"')) failures.push('call tel link missing: ' + rel);
+    if (!html.includes('lw-call-float') || !html.includes('01229030333')) failures.push('call button label/number missing: ' + rel);
     if (!html.includes(WA_HREF)) failures.push('WhatsApp link missing: ' + rel);
     if ((html.match(/lw-whatsapp-float/g) || []).length !== 1) failures.push('WhatsApp button count != 1: ' + rel);
     if (/LOCAL PREVIEW PLACEHOLDER|Placeholder image/i.test(html)) failures.push('placeholder wording remains: ' + rel);

@@ -2432,3 +2432,40 @@ body.lw-premium-site {
     linear-gradient(270deg, rgba(4, 15, 24, 0.95) 0%, rgba(4, 15, 24, 0.84) 38%, rgba(4, 15, 24, 0.58) 68%, rgba(4, 15, 24, 0.34) 100%),
     linear-gradient(0deg, rgba(4, 15, 24, 0.9) 0%, rgba(4, 15, 24, 0.18) 40%, rgba(4, 15, 24, 0) 62%);
 }
+
+/* Floating direct-call button — physical bottom-left in LTR and RTL.
+   WhatsApp stays physically bottom-right and its existing CSS is unchanged. */
+.lw-call-float {
+  position: fixed;
+  left: calc(18px + env(safe-area-inset-left, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #00618c;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .28);
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.lw-call-float:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0, 0, 0, .32); background: #0078ab; }
+.lw-call-float:focus-visible { outline: 3px solid #a84a00; outline-offset: 4px; }
+.lw-call-float, .lw-call-float:hover, .lw-call-float:focus,
+.lw-call-float:focus-visible, .lw-call-float:active { color: #fff; }
+.lw-call-float svg { display: block; }
+@media (max-width: 575px) {
+  .lw-call-float {
+    width: 50px;
+    height: 50px;
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lw-call-float { transition: none; }
+  .lw-call-float:hover { transform: none; }
+}
