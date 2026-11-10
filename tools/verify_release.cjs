@@ -48,6 +48,13 @@ function staticChecks() {
     const html = fs.readFileSync(abs, 'utf8');
     const dir = path.dirname(abs);
     if (!/AiFrahat\.com/.test(html)) failures.push('AiFrahat.com attribution missing: ' + rel);
+    const utilityStart = html.indexOf('<div class="lw-premium-utility">');
+    const utilityEnd = html.indexOf('<div class="lw-premium-main">', utilityStart);
+    const utility = utilityStart >= 0 && utilityEnd > utilityStart ? html.slice(utilityStart, utilityEnd) : '';
+    if (!utility) failures.push('top bar missing: ' + rel);
+    if (utility.includes('tel:') || utility.includes('+20 127 666 8018') || /\d{4,}/.test(utility)) failures.push('phone number remains in top bar: ' + rel);
+    if (!utility.includes('mailto:info@linkwave.tech')) failures.push('top bar email missing: ' + rel);
+    if (!utility.includes('Network Infrastructure & Telecommunications') && !utility.includes('البنية التحتية للشبكات والاتصالات')) failures.push('new top bar tagline missing: ' + rel);
     if (!/© 2018/.test(html)) failures.push('2018 copyright year missing: ' + rel);
     if (!/business-home\.html/.test(html)) failures.push('business nav link missing: ' + rel);
     if ((html.match(/lw-call-float/g) || []).length !== 1) failures.push('call button count != 1: ' + rel);

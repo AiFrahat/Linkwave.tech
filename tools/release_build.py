@@ -359,9 +359,8 @@ def build_premium_header(page: str, lang: str, prefix: str) -> str:
     return (
         '<header id="default_header" class="header_style_1 lw-premium-header">'
         '<div class="lw-premium-utility"><div class="container lw-premium-utility__inner">'
-        '<span class="lw-premium-tagline"><span data-i18n="tagline"></span></span>'
+        '<span class="lw-premium-tagline"><span data-i18n="topbarTagline"></span></span>'
         '<div class="lw-premium-utility__links">'
-        '<a href="tel:+201276668018" dir="ltr">+20 127 666 8018</a>'
         '<a href="mailto:info@linkwave.tech" dir="ltr">info@linkwave.tech</a>'
         '</div></div></div>'
         '<div class="lw-premium-main"><div class="container lw-premium-main__inner">'
@@ -579,6 +578,7 @@ def update_dictionary() -> dict:
     raw = path.read_text(encoding="utf-8")
     data = json.loads(raw.split("=", 1)[1].strip().rstrip(";"))
     additions = {
+        "topbarTagline": ("Network Infrastructure & Telecommunications", "البنية التحتية للشبكات والاتصالات"),
         "privacyLink": ("Privacy Policy", "سياسة الخصوصية"),
         "termsLink": ("Terms of Use", "شروط الاستخدام"),
         "reqNote": ("Fields marked * are required.", "الحقول المعلَّمة بـ* مطلوبة."),
