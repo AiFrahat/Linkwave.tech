@@ -1,13 +1,15 @@
 {
  "baselineCommit": "da5ee8b",
- "generatorSha256": "f28bd3e53c066dcd29c26b14d2d8510f91f65ac1f6efe615ad6f8f096f4440d1",
+ "generatorSha256": "92aebe30724ac23ddcdc2d5dbd46528c3354b2bac756465a1cfb3480530efdd6",
  "toolSha256": {
-  "release_build.py": "f28bd3e53c066dcd29c26b14d2d8510f91f65ac1f6efe615ad6f8f096f4440d1",
+  "release_build.py": "92aebe30724ac23ddcdc2d5dbd46528c3354b2bac756465a1cfb3480530efdd6",
   "ar_egyptian.py": "8c8709766f7507f954abee665d95200fa5433d6ab6b41e5992cceadcacfbbf12",
   "services_data.py": "4f1a499ef1d408714259cfae1fbfcfae6766d0f12b83327b0cbbca9e26d61255",
   "hero_data.py": "3d1358083731d8f75d18a0dca2c528ced9b0291ad023ad8650b34650006ed80c",
-  "artifacts/linkwave.js": "d309b0e9a3dcb7e3335498444af223f533eb7f0aff8699b4fadab341750a2514",
-  "artifacts/site-config.js": "f209933883252c648ce97dd0da21476909ca9b4bc6512163ceb28407395ddca0"
+  "artifacts/linkwave.js": "225df5a91132117e1abe5c32e9473558f971f2f1e35ccb0d1542347bd254b96b",
+  "artifacts/site-config.js": "f209933883252c648ce97dd0da21476909ca9b4bc6512163ceb28407395ddca0",
+  "premium-v2.css": "95a84e8e099b0adfeb76fb17b0f454c71cd3d22ddf05bf7f482563090951f384",
+  "build-config.json": "a68365b8692e0052244dd0cc62244bed548ac5a1cd7b71c3c3c4b77bf38a846b"
  },
  "expected": {
   "english_pages": 19,
@@ -22,7 +24,7 @@
   "404.html": "30e3c1b6033dc614deafccae1cc88d1e3bce198cea53041c65476a9e4917e2aa",
   "THIRD-PARTY-NOTICES.txt": "250cbf29866b2a8a1b1bebcedcfedb70ee99578704dcea9d0f4986939050e765",
   "ar/business-home.html": "bbc5a0814a69d785634d297a4dd1771683dba94dea4bed7bc052860794329ceb",
-  "ar/index.html": "b562be654ab72be0bc5b0657e5ed458a2d168afad298a73a0f21cf3af469b6e4",
+  "ar/index.html": "654a74749d4881d125f8ada51c92a1732901216cf626e346d54eae6ed24a3e8f",
   "ar/industries.html": "748f687513ce2a52dd5d131d83cf2871071248a1a24671baa44c0e69ff23041e",
   "ar/it_about.html": "526439adc4967ce629a76ed8bc02061d23957b0b9ae7466f2e3e3514f6a110d2",
   "ar/it_contact.html": "6fad4c04eedbcccc691514491888a85c6e878692c4f9dc7e004a8d82073233e8",
@@ -43,17 +45,17 @@
   "css/bootstrap.min.css": "f9f1ce2a9079ebe7445ff10ac12b8f049abc43c499f4978297ec5dd23283a2e5",
   "css/cairo.css": "445cdeb1cdc1bb70ab64d207073b31dfa553b0889b2a0c18148d468ec7007954",
   "css/colors1.css": "d45e071eb96dc4291d0de9a2fc766abe3a0ad4a1c3d2a49fee31079b5818a72b",
-  "css/linkwave.css": "bf45a9a13d98945420aca7d06d176733b334273a62053a165f7ffa334e29fc59",
+  "css/linkwave.css": "ce28e176db64072fa61288da15d2c45fae05a7f73a7685b40c9ccf30fa14e2b3",
   "css/refinement.css": "866d928a0676e30eefc7ab9a947091f15c058b356f1a439e21f379f42d398267",
   "css/responsive.css": "1d3ceb6ce9d1a60878fa78207ae6de5196c97a7a0864bc1f7798f371fabb06e3",
   "css/style.css": "06a31d3253b9d6d0190f271f9efa8e78d90071ea1544d4e9412b4c9022e2f454",
-  "index.html": "2e6f90c0e9d91bf1d857c51305efc6ded262b4ee639ea5798e8c42f6aa13917c",
+  "index.html": "276acc98ecfc89dcde83f1dbeb35108806aaf4e9abd3d36e52afd3a438cb6d58",
   "industries.html": "c476f30bc6817ebca0dd6b876501cecc76933d6c5e5bdeb10dbdd31bc5242f68",
   "it_about.html": "e3e8278ed837b03234fc995e3ac774a4f869f6d17996fb06d1d103691247e4c4",
   "it_contact.html": "0a96ee9fe6bc5abb83db238d2396d7d48f8a5a96a8159fbc77bbb680697507d9",
   "it_service.html": "7be67aecacf596d95a8bbbcd9ea0298bfc5f2c7618192cf62d482d9d6052a5ca",
   "js/content.js": "e7ba1740f7854a56f8055b7c8d173e729899e56b8890a176486a5a659d6caebf",
-  "js/linkwave.js": "d309b0e9a3dcb7e3335498444af223f533eb7f0aff8699b4fadab341750a2514",
+  "js/linkwave.js": "225df5a91132117e1abe5c32e9473558f971f2f1e35ccb0d1542347bd254b96b",
   "js/site-config.js": "f209933883252c648ce97dd0da21476909ca9b4bc6512163ceb28407395ddca0",
   "privacy.html": "6d78673c0fd88d2df359d193507ba14168115078b8655d54292fe808e463a001",
   "robots.txt": "c9fb76830ddd6a85140b19646e83fcb0d5d22e90777ee8c38a3daff0f92424eb",
@@ -71,5 +73,5 @@
   "sitemap.xml": "b89fa742f5a5a4d05c3514121ec21c995af71fcabaca251d78342b01a00bb5c9",
   "terms.html": "9170966f8875a52ea12b02e7ee755c063a55e1438d1f62ffbf2c3db3a2778d99"
  },
- "generatedAggregateSha256": "5e2f87d186501a23ec8b2507debf67ca0282c0a9eb3aca467853b4034d5c8dea"
+ "generatedAggregateSha256": "0cce0166f2414def0abbdf5dfc587c4184f0e98a1a21c8058027b84a9b42f1e1"
 }

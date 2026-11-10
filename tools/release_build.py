@@ -292,6 +292,8 @@ def build_header(page: str, lang: str, prefix: str) -> str:
         cls = ' class="active" aria-current="page"' if key == active else ""
         return f'<li><a href="{href}"{cls} data-local><span data-i18n="{key}">{key}</span></a></li>'
 
+    if page == "index.html":
+        return build_premium_header(page, lang, prefix)
     items = "".join(li(key, href) for key, href in NAV)
     return (
         '<header id="default_header" class="header_style_1">'
@@ -312,6 +314,81 @@ def build_header(page: str, lang: str, prefix: str) -> str:
         '<nav id="navbar_menu" aria-label="Main / الرئيسية"><ul id="lw-menu" class="first-ul">'
         + items +
         "</ul></nav></div></div></div></div></header>"
+    )
+
+
+def build_premium_header(page: str, lang: str, prefix: str) -> str:
+    """Premium V2 homepage header: editorial navigation + services mega panel."""
+    active = PAGES[page]["nav"]
+
+    def nav_item(key: str, href: str) -> str:
+        cls = ' class="active" aria-current="page"' if key == active else ""
+        return (f'<li><a href="{href}"{cls} data-local>'
+                f'<span data-i18n="{key}"></span></a></li>')
+
+    services = all_services()
+    enterprise = "".join(
+        f'<li><a href="{svc["route"]}" data-local><span data-i18n="{svc["key"]}"></span></a></li>'
+        for svc in services if svc["number"] <= 6
+    )
+    residential = "".join(
+        f'<li><a href="{svc["route"]}" data-local><span data-i18n="{svc["key"]}"></span></a></li>'
+        for svc in services if svc["number"] > 6
+    )
+    mobile_services = "".join(
+        f'<li><a href="{svc["route"]}" data-local><span data-i18n="{svc["key"]}"></span></a></li>'
+        for svc in services
+    )
+    panel = (
+        '<div class="lw-services-panel" id="lw-services-panel" hidden>'
+        '<div class="lw-services-panel__grid">'
+        '<div class="lw-services-panel__col">'
+        '<p class="lw-services-panel__label"><span data-i18n="services"></span></p>'
+        f'<ul class="lw-services-panel__links">{enterprise}</ul></div>'
+        '<div class="lw-services-panel__col lw-services-panel__col--home">'
+        '<p class="lw-services-panel__label"><span data-i18n="business"></span></p>'
+        f'<ul class="lw-services-panel__links">{residential}</ul></div>'
+        '</div>'
+        '<a class="lw-services-panel__all" href="it_service.html" data-local>'
+        '<span data-i18n="all"></span></a></div>'
+    )
+    return (
+        '<header id="default_header" class="header_style_1 lw-premium-header">'
+        '<div class="lw-premium-utility"><div class="container lw-premium-utility__inner">'
+        '<span class="lw-premium-tagline"><span data-i18n="tagline"></span></span>'
+        '<div class="lw-premium-utility__links">'
+        '<a href="tel:+201276668018" dir="ltr">+20 127 666 8018</a>'
+        '<a href="mailto:info@linkwave.tech" dir="ltr">info@linkwave.tech</a>'
+        '</div></div></div>'
+        '<div class="lw-premium-main"><div class="container lw-premium-main__inner">'
+        f'<a class="lw-premium-brand" href="index.html" data-local aria-label="Linkwave Technology">'
+        f'<img class="lw-logo" src="{prefix}images/linkwave/brand-emblem.webp" data-i18n-alt="brand" '
+        'alt="Linkwave Technology" decoding="async" width="96" height="96">'
+        '<span class="lw-brand-name" data-i18n="brand"></span></a>'
+        '<nav id="navbar_menu" class="lw-premium-nav" aria-label="Main / الرئيسية">'
+        '<ul id="lw-menu" class="first-ul lw-premium-nav__list">'
+        + nav_item("home", "index.html")
+        + nav_item("about", "it_about.html")
+        + '<li class="lw-premium-services-item">'
+        '<button class="lw-services-toggle" type="button" aria-expanded="false" '
+        'aria-controls="lw-services-panel"><span data-i18n="services"></span>'
+        '<span class="lw-services-toggle__chevron" aria-hidden="true"></span></button></li>'
+        + nav_item("business", "business-home.html")
+        + nav_item("industries", "industries.html")
+        + '<li class="lw-premium-mobile-only"><details class="lw-mobile-services">'
+        '<summary><span data-i18n="services"></span></summary>'
+        f'<ul>{mobile_services}</ul></details></li>'
+        '<li class="lw-premium-mobile-only lw-mobile-contact">'
+        '<a href="it_contact.html" data-local><span data-i18n="contact"></span></a></li>'
+        '</ul></nav>'
+        + panel
+        + '<div class="lw-premium-actions">'
+        + lang_switch(page, lang, prefix)
+        + '<button class="lw-menu-toggle" type="button" aria-expanded="false" '
+        'aria-controls="lw-menu"><span data-i18n="menu"></span></button>'
+        '<a class="lw-premium-cta" href="it_contact.html" data-local>'
+        '<span data-i18n="contact"></span></a>'
+        '</div></div></div></header>'
     )
 
 
@@ -384,17 +461,23 @@ def slide(index: int, data: dict, prefix: str, active: bool = False) -> str:
             f'<img class="lw-slide-img lw-slide-img--deferred" data-src="{src}" '
             f'data-srcset="{srcset}" sizes="100vw" width="1376" height="768" alt="" decoding="async">'
         )
+    arrow = ('<svg class="lw-btn__arrow" viewBox="0 0 20 20" aria-hidden="true" '
+             'focusable="false"><path d="M3 10h13M11 4l6 6-6 6" fill="none" '
+             'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" '
+             'stroke-linejoin="round"/></svg>')
     return (
         f'<div class="lw-slide{cls}" role="group" aria-roledescription="slide" '
         f'aria-label="{index} / {len(HERO_SLIDES)}" aria-hidden="{hidden}">'
         + image
         + '<span class="lw-shade" aria-hidden="true"></span>'
-        '<div class="lw-hero-caption">'
+        '<div class="lw-hero-caption"><div class="container"><div class="lw-hero-copy">'
+        '<p class="lw-hero-eyebrow"><span data-i18n="tagline"></span></p>'
         f'<p class="lw-hero-title"><span data-i18n="{title_key}"></span></p>'
         f'<p class="lw-hero-sub" data-i18n="{sub_key}"></p>'
+        '<div class="lw-hero-actions">'
         f'<a class="btn main_bt lw-hero-cta-btn" href="{data["route"]}" data-local>'
-        f'<span data-i18n="{cta_key}"></span></a>'
-        "</div></div>"
+        f'<span data-i18n="{cta_key}"></span>{arrow}</a>'
+        '</div></div></div></div></div>'
     )
 
 
@@ -406,26 +489,34 @@ def build_hero(prefix: str) -> str:
     )
     bullets = "".join(
         f'<button class="lw-bullet{" is-active" if i == 1 else ""}" type="button" aria-label="{i}" '
-        f'aria-current="{"true" if i == 1 else "false"}"><span aria-hidden="true"></span></button>'
+        f'aria-current="{"true" if i == 1 else "false"}">'
+        f'<span class="lw-bullet__num" aria-hidden="true">{"%02d" % i}</span></button>'
         for i in range(1, total + 1)
     )
     return (
         '<section class="lw-hero" id="lw-hero" aria-roledescription="carousel" '
         'aria-label="Linkwave Technology">'
         '<div class="lw-hero-track">' + slides + "</div>"
+        '<div class="lw-hero-footer"><div class="container lw-hero-footer__inner">'
+        '<a class="lw-hero-all" href="it_service.html" data-local>'
+        '<span data-i18n="all"></span>'
+        '<svg viewBox="0 0 20 20" width="14" height="14" aria-hidden="true" focusable="false">'
+        '<path d="M3 10h13M11 4l6 6-6 6" fill="none" stroke="currentColor" '
+        'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>'
         '<div class="lw-hero-controls">'
-        '<button id="lw-prev" type="button" class="lw-hero-arrow"><span class="sr-only" data-i18n="previous">Previous slide</span>'
-        '<span aria-hidden="true">‹</span></button>'
         f'<div class="lw-hero-bullets" role="group" aria-label="1 / {total}">{bullets}</div>'
-        '<button id="lw-next" type="button" class="lw-hero-arrow"><span class="sr-only" data-i18n="nextSlide">Next slide</span>'
-        '<span aria-hidden="true">›</span></button>'
+        '<div class="lw-hero-nav">'
+        '<button id="lw-prev" type="button" class="lw-hero-arrow">'
+        '<span class="sr-only" data-i18n="previous">Previous slide</span>'
+        '<span aria-hidden="true">‹</span></button>'
         '<button id="lw-pause" type="button" class="lw-hero-pause" aria-pressed="false">'
         '<span data-label data-i18n="pause">Pause animation</span></button>'
-        "</div>"
+        '<button id="lw-next" type="button" class="lw-hero-arrow">'
+        '<span class="sr-only" data-i18n="nextSlide">Next slide</span>'
+        '<span aria-hidden="true">›</span></button>'
+        '</div></div></div></div>'
         '<p class="sr-only" data-slide-status role="status" aria-live="polite"></p>'
         "</section>"
-        '<div class="lw-hero-cta container"><a href="it_service.html" class="btn main_bt" data-local>'
-        '<span data-i18n="all">Explore our services</span></a></div>'
     )
 
 
@@ -927,6 +1018,8 @@ def transform_english(dictionary: dict) -> None:
         html = re.sub(r'<script src="js/jquery[\s\S]*?(?=</body>)',
                       lambda m: build_scripts(""), html, count=1)
         if page == "index.html":
+            html = html.replace('<body id="default_theme"',
+                                '<body id="default_theme" class="lw-premium-home"', 1)
             html = replace_block(
                 html,
                 '<div class="lw-reduced-hero">',
@@ -1408,7 +1501,10 @@ def update_css() -> None:
         "url('../images/linkwave/hero.webp')",
         "url('../images/linkwave/hero-banner-1440.webp')",
     )
-    linkwave.write_text(text + APPEND_LINKWAVE_CSS + TEN_SERVICES_CSS, encoding="utf-8", newline="\n")
+    premium_css_path = Path(__file__).resolve().parent / "premium-v2.css"
+    premium_css = premium_css_path.read_text(encoding="utf-8") if premium_css_path.exists() else ""
+    linkwave.write_text(text + APPEND_LINKWAVE_CSS + TEN_SERVICES_CSS + premium_css,
+                        encoding="utf-8", newline="\n")
 
     refinement = SITE / "css" / "refinement.css"
     refinement.write_text(

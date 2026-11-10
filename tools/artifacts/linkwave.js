@@ -106,6 +106,66 @@
     });
   }
 
+  /* 3b. Premium V2 homepage header: services panel, compact sticky state, soft reveals. */
+  var premiumHeader = document.querySelector('.lw-premium-header');
+  if (premiumHeader) {
+    var servicesToggle = premiumHeader.querySelector('.lw-services-toggle');
+    var servicesPanel = document.getElementById('lw-services-panel');
+    if (servicesToggle && servicesPanel) {
+      var setServices = function (open) {
+        servicesToggle.setAttribute('aria-expanded', String(open));
+        if (open) servicesPanel.removeAttribute('hidden');
+        else servicesPanel.setAttribute('hidden', '');
+      };
+      servicesToggle.addEventListener('click', function () {
+        setServices(servicesToggle.getAttribute('aria-expanded') !== 'true');
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && servicesToggle.getAttribute('aria-expanded') === 'true') {
+          setServices(false);
+          servicesToggle.focus();
+        }
+      });
+      document.addEventListener('click', function (event) {
+        if (servicesToggle.getAttribute('aria-expanded') === 'true' &&
+            !servicesPanel.contains(event.target) && !servicesToggle.contains(event.target)) {
+          setServices(false);
+        }
+      });
+      servicesPanel.addEventListener('click', function (event) {
+        if (event.target.closest('a')) setServices(false);
+      });
+    }
+
+    var setCompact = function () {
+      premiumHeader.classList.toggle('is-compact', window.scrollY > 72);
+    };
+    setCompact();
+    window.addEventListener('scroll', setCompact, { passive: true });
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if ('IntersectionObserver' in window && !reduceMotion.matches) {
+      var revealTargets = document.querySelectorAll(
+        '#main .lw-service-row, #main .main_heading, #main .about_cont_blog, #main .light_silver .row'
+      );
+      if (revealTargets.length) {
+        document.documentElement.classList.add('lw-reveal-ready');
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+        Array.prototype.forEach.call(revealTargets, function (element) {
+          element.classList.add('lw-reveal');
+          revealObserver.observe(element);
+        });
+      }
+    }
+  }
+
   /* 4. Enquiry form: accessible validation + secure JSON submission to a configured
    server-side endpoint. No success is shown unless the endpoint explicitly accepts. */
   var form = document.getElementById('quote-form');

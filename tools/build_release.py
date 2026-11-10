@@ -169,7 +169,8 @@ def write_manifest(build_root: Path, path: Path, baseline: str) -> None:
         "toolSha256": {
             name: sha256(TOOLS / name)
             for name in ["release_build.py", "ar_egyptian.py", "services_data.py", "hero_data.py",
-                         "artifacts/linkwave.js", "artifacts/site-config.js"]
+                         "artifacts/linkwave.js", "artifacts/site-config.js",
+                         "premium-v2.css", "build-config.json"]
         },
         "expected": EXPECTED,
         "generatedFileCount": len(files),
